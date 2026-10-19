@@ -1,14 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NK Pockets - Real Gaming Hub</title>
+    <title>NK Pockets - Real Money Gaming & Rewards Hub</title>
+    
+    <!-- SEO Meta Tags for Google Search Ranking -->
+    <meta name="description" content="NK Pockets is India's leading real money gaming and reward platform. Play Aviator, Fruit Slot, and win exciting cash prizes daily.">
+    <meta name="keywords" content="NK Pockets, NK Pockets gaming, real money game, aviator game india, earn money online, fruit slot game">
+    <meta name="author" content="Nitin Vishwkarma">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="NK Pockets - Real Money Gaming Hub">
+    <meta property="og:description" content="Play exciting games, spin the jackpot, and earn daily rewards on NK Pockets.">
+    <meta property="og:type" content="website">
+
+    <!-- Professional App Icon / Logo -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3076/3076137.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3076/3076137.png">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="theme-color" content="#030712">
     <link rel="manifest" href="data:application/manifest+json;charset=utf-8,{
-        %22name%22: %22NK Pockets Real Gaming%22,
+        %22name%22: %22NK Pockets Gaming Hub%22,
         %22short_name%22: %22NK Pockets%22,
         %22start_url%22: %22/%22,
         %22display%22: %22standalone%22,
@@ -20,16 +35,19 @@
 <body class="bg-gray-950 text-white font-sans min-h-screen pb-12 select-none">
 
     <!-- Login Container -->
-    <div id="auth-container" class="max-w-md mx-auto mt-20 p-6 bg-gray-900 rounded-xl shadow-2xl border border-gray-800 mx-4">
-        <div class="text-center mb-4">
-            <span class="text-4xl">🎮</span>
-            <h2 class="text-2xl font-bold mt-2 text-green-400">NK Pockets Gaming</h2>
-            <p class="text-xs text-gray-400 mt-1">Mobile number ya ID daalkar login karein aur turant bonus paayein!</p>
+    <div id="auth-container" class="max-w-md mx-auto mt-16 p-6 bg-gray-900 rounded-2xl shadow-2xl border border-gray-800 mx-4">
+        <div class="text-center mb-6">
+            <!-- Professional Logo -->
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-green-600 to-emerald-400 rounded-2xl shadow-lg mb-3">
+                <span class="text-3xl">🎮</span>
+            </div>
+            <h2 class="text-2xl font-extrabold text-green-400 tracking-wide">NK Pockets</h2>
+            <p class="text-xs text-gray-400 mt-1">Real Money Gaming & Rewards Platform</p>
         </div>
         
-        <input type="text" id="user-identifier" placeholder="Mobile Number ya ID daalein" class="w-full p-3 mb-4 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-green-500 text-base">
+        <input type="text" id="user-identifier" placeholder="Mobile Number ya Unique ID daalein" class="w-full p-3.5 mb-4 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-green-500 text-base shadow-inner">
         
-        <button id="login-btn" class="w-full bg-green-600 hover:bg-green-500 font-bold py-3 rounded-lg transition shadow-lg text-base cursor-pointer">Secure Login & Play</button>
+        <button id="login-btn" class="w-full bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 font-bold py-3.5 rounded-xl transition shadow-lg text-base cursor-pointer">Secure Login & Play</button>
         
         <div class="mt-4 text-center">
             <button id="install-app-btn" class="hidden text-xs text-blue-400 underline cursor-pointer">📲 Phone me App Install karein</button>
@@ -52,20 +70,20 @@
 
         <!-- Quick Actions -->
         <div class="grid grid-cols-2 gap-4 mb-6">
-            <button id="deposit-btn" class="bg-blue-600 hover:bg-blue-500 py-3 rounded-lg font-semibold text-center transition shadow cursor-pointer text-sm">Add Money (UPI)</button>
-            <button id="withdraw-btn" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-lg font-semibold text-center transition shadow cursor-pointer text-sm">Withdraw</button>
+            <button id="deposit-btn" class="bg-blue-600 hover:bg-blue-500 py-3 rounded-xl font-semibold text-center transition shadow cursor-pointer text-sm">Add Money (UPI)</button>
+            <button id="withdraw-btn" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-xl font-semibold text-center transition shadow cursor-pointer text-sm">Withdraw</button>
         </div>
 
         <!-- Aviator Game Section -->
         <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
             <h3 class="text-lg font-bold text-red-400 mb-1">✈️ Aviator (Crash Game)</h3>
             <p class="text-xs text-gray-400 mb-3">Fly high up to 500x multiplier!</p>
-            <div class="bg-black p-4 rounded-lg mb-3 border border-gray-800">
+            <div class="bg-black p-4 rounded-xl mb-3 border border-gray-800">
                 <span id="aviator-multiplier" class="text-3xl font-extrabold text-green-400">1.00x</span>
             </div>
-            <input type="number" id="aviator-bet" placeholder="Bet Amount (₹)" class="w-full p-2 mb-3 bg-gray-800 border border-gray-700 rounded-lg text-center text-white">
-            <button id="aviator-btn" class="w-full bg-red-600 hover:bg-red-500 py-2 rounded-lg font-bold transition mb-2 cursor-pointer">Place Bet & Fly</button>
-            <button id="cashout-btn" class="w-full bg-green-600 hover:bg-green-500 py-2 rounded-lg font-bold transition hidden cursor-pointer">CASH OUT</button>
+            <input type="number" id="aviator-bet" placeholder="Bet Amount (₹)" class="w-full p-2.5 mb-3 bg-gray-800 border border-gray-700 rounded-xl text-center text-white">
+            <button id="aviator-btn" class="w-full bg-red-600 hover:bg-red-500 py-2.5 rounded-xl font-bold transition mb-2 cursor-pointer">Place Bet & Fly</button>
+            <button id="cashout-btn" class="w-full bg-green-600 hover:bg-green-500 py-2.5 rounded-xl font-bold transition hidden cursor-pointer">CASH OUT</button>
             <p id="aviator-result" class="mt-2 text-sm font-semibold"></p>
         </div>
 
@@ -73,24 +91,24 @@
         <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
             <h3 class="text-lg font-bold text-yellow-400 mb-1">🍒 Fruit Slot (1x - 500x)</h3>
             <p class="text-xs text-gray-400 mb-3">Match 3 fruits to win real balance!</p>
-            <div class="bg-black p-4 rounded-lg mb-3 border border-gray-800 flex justify-center gap-4 text-3xl">
+            <div class="bg-black p-4 rounded-xl mb-3 border border-gray-800 flex justify-center gap-4 text-3xl">
                 <span id="slot-1">🍋</span>
                 <span id="slot-2">🍒</span>
                 <span id="slot-3">⭐</span>
             </div>
-            <button id="slot-btn" class="w-full bg-yellow-600 hover:bg-yellow-500 py-2 rounded-lg font-bold text-black transition cursor-pointer">Spin Slot (₹10)</button>
+            <button id="slot-btn" class="w-full bg-yellow-600 hover:bg-yellow-500 py-2.5 rounded-xl font-bold text-black transition cursor-pointer">Spin Slot (₹10)</button>
             <p id="slot-result" class="mt-2 text-sm font-semibold text-yellow-300"></p>
         </div>
 
         <!-- Watch Ads & Earn -->
         <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 text-center">
             <h3 class="text-lg font-bold mb-2">Watch Ads & Earn 📺</h3>
-            <button id="ad-btn" class="bg-amber-600 hover:bg-amber-500 px-6 py-2 rounded-lg font-bold transition cursor-pointer">Watch Ad (₹0.50)</button>
+            <button id="ad-btn" class="bg-amber-600 hover:bg-amber-500 px-6 py-2.5 rounded-xl font-bold transition cursor-pointer">Watch Ad (₹0.50)</button>
             <p id="ad-result" class="mt-2 text-sm text-green-400 font-semibold"></p>
         </div>
     </div>
 
-    <!-- Firebase & App Logic Script -->
+    <!-- Firebase & Logic Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -115,7 +133,6 @@
         let isPlayingAviator = false;
         let betAmount = 0;
 
-        // PWA Install Prompt Capture
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -132,7 +149,7 @@
                 }
                 deferredPrompt = null;
             } else {
-                alert("App install karne ke liye Chrome Browser ke Menu (3 dots) par click karke 'Add to Home Screen' ya 'Install App' par click karein.");
+                alert("App install karne ke liye Chrome Browser ke Menu (3 dots) par click karke 'Add to Home Screen' par click karein.");
             }
         });
 
@@ -144,43 +161,44 @@
             }
         }
 
-        // Login Handler with Direct Click Fix
         document.getElementById('login-btn').addEventListener('click', async () => {
             let inputId = document.getElementById('user-identifier').value.trim();
             if(!inputId) {
-                alert("Kripya apna Mobile Number ya Unique ID daalein!");
+                alert("Kripya apna Mobile Number ya ID daalein!");
                 return;
             }
 
-            currentUserKey = inputId.replace(/[^a-zA-Z0-9]/g, "_");
-            const userRef = doc(db, "users", currentUserKey);
-            const userSnap = await getDoc(userRef);
+            try {
+                currentUserKey = inputId.replace(/[^a-zA-Z0-9]/g, "_");
+                const userRef = doc(db, "users", currentUserKey);
+                const userSnap = await getDoc(userRef);
 
-            if (userSnap.exists()) {
-                window.userWalletBalance = userSnap.data().balance;
-                alert(`Welcome back, ${inputId}! Balance loaded.`);
-            } else {
-                let welcomeBonus = Math.floor(Math.random() * (99 - 3 + 1)) + 3;
-                window.userWalletBalance = welcomeBonus;
-                await setDoc(userRef, {
-                    identifier: inputId,
-                    balance: window.userWalletBalance,
-                    createdAt: new Date().toISOString()
-                });
-                alert(`🎉 Account Created! Welcome Bonus: ₹${welcomeBonus}`);
+                if (userSnap.exists()) {
+                    window.userWalletBalance = userSnap.data().balance;
+                    alert(`Welcome back, ${inputId}!`);
+                } else {
+                    let welcomeBonus = Math.floor(Math.random() * (99 - 3 + 1)) + 3;
+                    window.userWalletBalance = welcomeBonus;
+                    await setDoc(userRef, {
+                        identifier: inputId,
+                        balance: window.userWalletBalance,
+                        createdAt: new Date().toISOString()
+                    });
+                    alert(`🎉 Account Created! Bonus: ₹${welcomeBonus}`);
+                }
+
+                document.getElementById('display-name').innerText = inputId;
+                document.getElementById('wallet-balance').innerText = window.userWalletBalance.toFixed(2);
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            } catch (error) {
+                alert("Database Error: " + error.message);
             }
-
-            document.getElementById('display-name').innerText = inputId;
-            document.getElementById('wallet-balance').innerText = window.userWalletBalance.toFixed(2);
-            document.getElementById('auth-container').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
         });
 
-        // Fruit Slot Game
         document.getElementById('slot-btn').addEventListener('click', () => {
-            if(window.userWalletBalance < 10) { alert('Balance kam hai! Kam se kam ₹10 chahiye.'); return; }
+            if(window.userWalletBalance < 10) { alert('Balance kam hai! Min ₹10 chahiye.'); return; }
             updateWallet(-10);
-
             let fruits = ['🍋', '🍒', '⭐', '💎', '🍉'];
             let f1 = fruits[Math.floor(Math.random() * fruits.length)];
             let f2 = fruits[Math.floor(Math.random() * fruits.length)];
@@ -193,7 +211,7 @@
             if(f1 === f2 && f2 === f3) {
                 let win = f1 === '💎' ? 500 : 100;
                 updateWallet(win);
-                document.getElementById('slot-result').innerText = `🔥 JACKPOT MATCH! Won ₹${win}!`;
+                document.getElementById('slot-result').innerText = `🔥 JACKPOT! Won ₹${win}!`;
             } else if(f1 === f2 || f2 === f3 || f1 === f3) {
                 updateWallet(20);
                 document.getElementById('slot-result').innerText = `✨ Two matched! Won ₹20!`;
@@ -202,11 +220,10 @@
             }
         });
 
-        // Aviator Game
         document.getElementById('aviator-btn').addEventListener('click', () => {
             betAmount = Number(document.getElementById('aviator-bet').value);
             if(!betAmount || betAmount <= 0) { alert('Sahi bet amount daalein!'); return; }
-            if(window.userWalletBalance < betAmount) { alert('Wallet me itna balance nahi hai!'); return; }
+            if(window.userWalletBalance < betAmount) { alert('Wallet me balance nahi hai!'); return; }
 
             updateWallet(-betAmount);
             document.getElementById('aviator-btn').classList.add('hidden');
@@ -225,7 +242,6 @@
                     if(isPlayingAviator) {
                         isPlayingAviator = false;
                         document.getElementById('aviator-result').innerText = `💥 Crashed at ${crashAt}x! Lost ₹${betAmount}`;
-                        document.getElementById('aviator-result').className = 'mt-2 text-sm font-semibold text-red-500';
                         document.getElementById('aviator-btn').classList.remove('hidden');
                         document.getElementById('cashout-btn').classList.add('hidden');
                     }
@@ -237,39 +253,22 @@
             if(!isPlayingAviator) return;
             clearInterval(aviatorInterval);
             isPlayingAviator = false;
-            
             let wonAmount = (betAmount * currentMultiplier).toFixed(2);
             updateWallet(Number(wonAmount));
-            
             document.getElementById('aviator-result').innerText = `🎉 Cashed out at ${currentMultiplier.toFixed(2)}x! Won ₹${wonAmount}`;
-            document.getElementById('aviator-result').className = 'mt-2 text-sm font-semibold text-green-400';
-            document.getElementById('aviator-btn').classList.remove('hidden');
-            document.getElementById('cashout-btn').classList.add('hidden');
+            document.getElementById('aviator-btn').classList.add('hidden');
+            document.getElementById('cashout-btn').classList.remove('hidden');
         });
 
-        // Watch Ad
-        document.getElementById('ad-btn').addEventListener('click', () => {
-            const btn = document.getElementById('ad-btn');
-            btn.disabled = true;
-            btn.innerText = 'Watching Ad...';
-            setTimeout(() => {
-                updateWallet(0.50);
-                document.getElementById('ad-result').innerText = '₹0.50 added successfully! ✅';
-                btn.disabled = false;
-                btn.innerText = 'Watch Ad (₹0.50)';
-            }, 3000);
-        });
-
-        // Deposit via Navi UPI ID (8819920722@naviaxis)
         document.getElementById('deposit-btn').addEventListener('click', () => {
             let amount = prompt("Kitna amount add karna hai? (Jaise: 100, 500)");
             if(amount && !isNaN(amount) && amount > 0) {
-                let upiID = "8819920722@naviaxis"; //
+                let upiID = "8819920722@naviaxis";
                 let confirmPay = confirm(`Kripya is UPI ID par ₹${amount} bhejhein (NITIN):\n👉 ${upiID}\n\nPese bhejne ke baad 12-digit UTR number daalein.`);
                 if(confirmPay) {
                     let utr = prompt("Apne payment ka 12-digit UTR / Transaction ID daalein:");
                     if(utr && utr.length >= 8) {
-                        alert(`Deposit request submitted! UTR: ${utr}\nVerification ke baad balance update ho jayega.`);
+                        alert(`Deposit request submitted! UTR: ${utr}`);
                     } else {
                         alert("Sahi UTR number daalna anivarya hai.");
                     }
@@ -277,20 +276,19 @@
             }
         });
 
-        // Withdraw
         document.getElementById('withdraw-btn').addEventListener('click', () => {
             let amt = Number(prompt("Withdrawal amount (Min ₹100):"));
             if(amt >= 100) {
                 if(window.userWalletBalance >= amt) {
-                    let userUpi = prompt("Apna UPI ID daalein jahan paise lene hain:");
+                    let userUpi = prompt("Apna UPI ID daalein:");
                     if(userUpi && userUpi.includes("@")) {
                         updateWallet(-amt);
-                        alert(`₹${amt} ki withdrawal request accept ho gayi hai! Aapke UPI (${userUpi}) par bhej diye jayenge.`);
+                        alert(`₹${amt} ki withdrawal request accept ho gayi hai!`);
                     } else {
                         alert("Kripya sahi UPI ID daalein.");
                     }
                 } else {
-                    alert('Wallet me itna balance nahi hai!');
+                    alert('Wallet me balance kam hai!');
                 }
             } else if(amt > 0) {
                 alert('Minimum withdrawal limit ₹100 hai.');
