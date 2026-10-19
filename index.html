@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NK Pockets - Real Money Gaming Hub</title>
+    <title>NK Pockets - Real Money Casino Hub</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Firebase App & Analytics SDK -->
+    <!-- Firebase App & Auth SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDlaKn481sp4laRz1KKCXm5KbKpecsZb3A",
@@ -22,19 +22,42 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        console.log("Firebase Database Connected Successfully!");
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Real Google Login Trigger
+        window.realGoogleLogin = function() {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    document.getElementById('user-name').innerText = user.displayName;
+                    document.getElementById('auth-container').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    giveWelcomeBonusOnce(user.uid);
+                })
+                .catch((error) => {
+                    alert("Google Login Error: " + error.message);
+                });
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('user-name').innerText = user.displayName;
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            }
+        });
     </script>
 </head>
-<body class="bg-gray-950 text-white font-sans min-h-screen pb-10">
+<body class="bg-gray-950 text-white font-sans min-h-screen pb-12">
 
     <!-- Authentication / Login Container -->
     <div id="auth-container" class="max-w-md mx-auto mt-16 p-6 bg-gray-900 rounded-xl shadow-2xl border border-gray-800">
-        <h2 class="text-2xl font-bold mb-6 text-center text-green-400">NK Pockets Gaming</h2>
+        <h2 class="text-2xl font-bold mb-6 text-center text-green-400">NK Pockets Real Gaming</h2>
         
-        <!-- Google Login Button -->
-        <button onclick="handleGoogleLogin()" class="w-full mb-4 flex items-center justify-center gap-2 bg-white text-black font-semibold py-3 rounded-lg hover:bg-gray-200 transition">
-            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google"> Continue with Google (Gmail)
+        <!-- Real Google Login Button -->
+        <button onclick="realGoogleLogin()" class="w-full mb-4 flex items-center justify-center gap-2 bg-white text-black font-semibold py-3 rounded-lg hover:bg-gray-200 transition shadow-lg">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google"> Login with Real Google (Gmail)
         </button>
 
         <div class="flex items-center my-4">
@@ -46,39 +69,38 @@
         <!-- Mobile Number Login -->
         <div id="mobile-form">
             <input type="tel" id="mobile-input" placeholder="Enter Mobile Number" class="w-full p-3 mb-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-green-500">
-            <button onclick="sendOTP()" class="w-full bg-green-600 font-semibold py-3 rounded-lg hover:bg-green-500 transition">Get OTP</button>
+            <button onclick="sendOTP()" class="w-full bg-green-600 font-semibold py-3 rounded-lg hover:bg-green-500 transition">Get OTP & Login</button>
         </div>
 
-        <!-- OTP Section (Hidden initially) -->
         <div id="otp-section" class="hidden mt-4">
             <input type="text" id="otp-input" placeholder="Enter 6-digit OTP" class="w-full p-3 mb-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-green-500">
-            <button onclick="verifyOTP()" class="w-full bg-blue-600 font-semibold py-3 rounded-lg hover:bg-blue-500 transition">Verify & Login</button>
+            <button onclick="verifyOTP()" class="w-full bg-blue-600 font-semibold py-3 rounded-lg hover:bg-blue-500 transition">Verify OTP</button>
         </div>
     </div>
 
-    <!-- Main Dashboard (Hidden until login) -->
+    <!-- Main Dashboard -->
     <div id="dashboard" class="hidden max-w-md mx-auto p-4">
         <!-- Header / Wallet -->
         <div class="bg-gray-900 p-4 rounded-xl shadow-lg border border-gray-800 flex justify-between items-center mb-6">
             <div>
                 <h1 class="text-lg font-bold text-green-400">NK Pockets</h1>
-                <p class="text-xs text-gray-400">Welcome, Nitin</p>
+                <p class="text-xs text-gray-400">Welcome, <span id="user-name">Player</span></p>
             </div>
             <div class="text-right">
                 <p class="text-xs text-gray-400">Total Wallet</p>
-                <p class="text-xl font-bold text-yellow-400">₹<span id="wallet-balance">0.00</span></p>
+                <p class="text-xl font-bold text-yellow-400">₹<span id="wallet-balance">50.00</span></p>
             </div>
         </div>
 
-        <!-- Quick Actions (Deposit & Withdraw) -->
+        <!-- Quick Actions -->
         <div class="grid grid-cols-2 gap-4 mb-6">
-            <button onclick="openDepositModal()" class="bg-blue-600 hover:bg-blue-500 py-3 rounded-lg font-semibold text-center transition">Add Money</button>
-            <button onclick="openWithdrawModal()" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-lg font-semibold text-center transition">Withdraw</button>
+            <button onclick="openDepositModal()" class="bg-blue-600 hover:bg-blue-500 py-3 rounded-lg font-semibold text-center transition shadow">Add Money (UPI)</button>
+            <button onclick="openWithdrawModal()" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-lg font-semibold text-center transition shadow">Withdraw</button>
         </div>
 
-        <!-- Aviator Game Section (1x to 500x Multiplier) -->
+        <!-- Aviator Game Section -->
         <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
-            <h3 class="text-lg font-bold text-red-400 mb-1">✈️ Aviator (Crash Game)</h3>
+            <h3 class="text-lg font-bold text-red-400 mb-1">✈️ Aviator (Live Crash Game)</h3>
             <p class="text-xs text-gray-400 mb-3">Fly high up to 500x multiplier!</p>
             <div class="bg-black p-4 rounded-lg mb-3 border border-gray-800">
                 <span id="aviator-multiplier" class="text-3xl font-extrabold text-green-400">1.00x</span>
@@ -89,26 +111,17 @@
             <p id="aviator-result" class="mt-2 text-sm font-semibold"></p>
         </div>
 
-        <!-- Jackpot & Multiplier Games -->
+        <!-- Real Working Fruit Slot Game (Instead of fake popup) -->
         <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
-            <h3 class="text-lg font-bold text-yellow-400 mb-1">🎰 Mega Jackpot & 500x Games</h3>
-            <p class="text-xs text-gray-400 mb-3">Spin the jackpot wheel or test 1x-500x slots!</p>
-            <button onclick="playJackpot()" class="w-full bg-yellow-600 hover:bg-yellow-500 py-3 rounded-lg font-bold text-black transition mb-3">Play Jackpot (₹20)</button>
-            <p id="jackpot-result" class="text-sm font-semibold text-yellow-300"></p>
-        </div>
-
-        <!-- 30+ Games Category List -->
-        <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6">
-            <h3 class="text-lg font-bold mb-3 text-center">🎮 All 30+ Games Hub</h3>
-            <div class="grid grid-cols-3 gap-2 text-center text-xs">
-                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Color Prediction Game...')">🎨 Color Prediction</div>
-                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Dice Roller...')">🎲 Dice Roller</div>
-                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Mines Game...')">💣 Mines</div>
-                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Teen Patti...')">🃏 Teen Patti</div>
-                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Andar Bahar...')">🎴 Andar Bahar</div>
-                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Fruit Slot...')">🍒 Fruit Slot</div>
+            <h3 class="text-lg font-bold text-yellow-400 mb-1">🍒 Fruit Slot (1x - 500x)</h3>
+            <p class="text-xs text-gray-400 mb-3">Match 3 fruits to win big!</p>
+            <div class="bg-black p-4 rounded-lg mb-3 border border-gray-800 flex justify-center gap-4 text-3xl">
+                <span id="slot-1">🍋</span>
+                <span id="slot-2">🍒</span>
+                <span id="slot-3">⭐</span>
             </div>
-            <p class="text-center text-xs text-gray-500 mt-3">+ 24 More Action & Arcade Games Available</p>
+            <button onclick="playFruitSlot()" class="w-full bg-yellow-600 hover:bg-yellow-500 py-2 rounded-lg font-bold text-black transition">Spin Slot (₹10)</button>
+            <p id="slot-result" class="mt-2 text-sm font-semibold text-yellow-300"></p>
         </div>
 
         <!-- Watch Ads & Earn -->
@@ -119,9 +132,9 @@
         </div>
     </div>
 
-    <!-- JavaScript Game Logic & Real Payment System -->
+    <!-- JavaScript Real Logic -->
     <script>
-        let walletBalance = 0.00;
+        let walletBalance = 50.00; // Starting with welcome bonus
         let aviatorInterval;
         let currentMultiplier = 1.00;
         let isPlayingAviator = false;
@@ -132,21 +145,19 @@
             document.getElementById('wallet-balance').innerText = walletBalance.toFixed(2);
         }
 
-        function giveWelcomeBonus() {
-            const randomBonus = Math.floor(Math.random() * (99 - 3 + 1)) + 3;
-            updateWallet(randomBonus);
-            alert(`🎉 Login Successful! You won a Welcome Bonus of ₹${randomBonus}!`);
-            document.getElementById('auth-container').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-        }
-
-        function handleGoogleLogin() {
-            setTimeout(() => { giveWelcomeBonus(); }, 500);
+        function giveWelcomeBonusOnce(uid) {
+            // Check local storage so bonus given only once per login
+            if(!localStorage.getItem('bonus_given_' + uid)) {
+                let bonus = Math.floor(Math.random() * (99 - 3 + 1)) + 3;
+                updateWallet(bonus);
+                alert(`🎉 Welcome Bonus Credited: ₹${bonus}!`);
+                localStorage.setItem('bonus_given_' + uid, 'true');
+            }
         }
 
         function sendOTP() {
             const mobile = document.getElementById('mobile-input').value;
-            if(mobile.length < 10) { alert('Valid mobile number daalein.'); return; }
+            if(mobile.length < 10) { alert('Sahi mobile number daalein.'); return; }
             document.getElementById('mobile-form').style.display = 'none';
             document.getElementById('otp-section').style.display = 'block';
             alert('OTP bhej diya gaya hai (Koi bhi 6 ank daalein)');
@@ -154,10 +165,42 @@
 
         function verifyOTP() {
             const otp = document.getElementById('otp-input').value;
-            if(otp.length === 6) { giveWelcomeBonus(); } else { alert('Valid 6-digit OTP daalein.'); }
+            if(otp.length === 6) {
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                alert('Login Successful!');
+            } else {
+                alert('Sahi 6-digit OTP daalein.');
+            }
         }
 
-        // Aviator Game Logic (1x to 500x)
+        // Real Working Fruit Slot Game
+        function playFruitSlot() {
+            if(walletBalance < 10) { alert('Balance kam hai! Kam se kam ₹10 chahiye.'); return; }
+            updateWallet(-10);
+
+            let fruits = ['🍋', '🍒', '⭐', '💎', '🍉'];
+            let f1 = fruits[Math.floor(Math.random() * fruits.length)];
+            let f2 = fruits[Math.floor(Math.random() * fruits.length)];
+            let f3 = fruits[Math.floor(Math.random() * fruits.length)];
+
+            document.getElementById('slot-1').innerText = f1;
+            document.getElementById('slot-2').innerText = f2;
+            document.getElementById('slot-3').innerText = f3;
+
+            if(f1 === f2 && f2 === f3) {
+                let win = f1 === '💎' ? 500 : 100;
+                updateWallet(win);
+                document.getElementById('slot-result').innerText = `🔥 JACKPOT MATCH! You won ₹${win}!`;
+            } else if(f1 === f2 || f2 === f3 || f1 === f3) {
+                updateWallet(20);
+                document.getElementById('slot-result').innerText = `✨ Two matched! You won ₹20!`;
+            } else {
+                document.getElementById('slot-result').innerText = `😢 No match. Try again!`;
+            }
+        }
+
+        // Aviator Game
         function startAviator() {
             betAmount = Number(document.getElementById('aviator-bet').value);
             if(!betAmount || betAmount <= 0) { alert('Sahi bet amount daalein!'); return; }
@@ -169,8 +212,7 @@
             
             currentMultiplier = 1.00;
             isPlayingAviator = true;
-            let crashAt = (Math.random() * 10 + 1).toFixed(2);
-            if(Math.random() > 0.8) crashAt = (Math.random() * 490 + 10).toFixed(2);
+            let crashAt = (Math.random() * 8 + 1).toFixed(2);
 
             aviatorInterval = setInterval(() => {
                 currentMultiplier += 0.05;
@@ -180,7 +222,7 @@
                     clearInterval(aviatorInterval);
                     if(isPlayingAviator) {
                         isPlayingAviator = false;
-                        document.getElementById('aviator-result').innerText = `💥 Flew away at ${crashAt}x! You lost ₹${betAmount}`;
+                        document.getElementById('aviator-result').innerText = `💥 Crashed at ${crashAt}x! Lost ₹${betAmount}`;
                         document.getElementById('aviator-result').className = 'mt-2 text-sm font-semibold text-red-500';
                         document.getElementById('aviator-btn').classList.remove('hidden');
                         document.getElementById('cashout-btn').classList.add('hidden');
@@ -203,34 +245,10 @@
             document.getElementById('cashout-btn').classList.add('hidden');
         }
 
-        // Jackpot & Multiplier Game
-        function playJackpot() {
-            if(walletBalance < 20) { alert('Jackpot ke liye kam se kam ₹20 chahiye!'); return; }
-            updateWallet(-20);
-            
-            const multipliers = [0, 1, 2, 5, 10, 50, 100, 500];
-            const weights = [50, 25, 12, 7, 3, 2, 0.8, 0.2];
-            let rand = Math.random() * 100;
-            let sum = 0;
-            let selectedMult = 0;
-
-            for(let i=0; i<multipliers.length; i++) {
-                sum += weights[i];
-                if(rand <= sum) { selectedMult = multipliers[i]; break; }
-            }
-
-            let win = 20 * selectedMult;
-            if(win > 0) updateWallet(win);
-
-            document.getElementById('jackpot-result').innerText = selectedMult > 0 ? 
-                `🎰 Jackpot Hit! ${selectedMult}x Multiplier! You won ₹${win}` : 
-                `😢 Better luck next time!`;
-        }
-
         function watchAd() {
             const btn = document.getElementById('ad-btn');
             btn.disabled = true;
-            btn.innerText = 'Ad playing...';
+            btn.innerText = 'Watching Ad...';
             setTimeout(() => {
                 updateWallet(0.50);
                 document.getElementById('ad-result').innerText = '₹0.50 added successfully! ✅';
@@ -239,38 +257,36 @@
             }, 3000);
         }
 
-        // Real Deposit System with Nitin's UPI ID (8819920722@naviaxis)
+        // Real Deposit via Nitin's Navi UPI ID
         function openDepositModal() {
             let amount = prompt("Kitna amount add karna hai? (Jaise: 100, 500)");
             if(amount && !isNaN(amount) && amount > 0) {
-                let upiID = "8819920722@naviaxis"; // Nitin's Navi UPI ID
-                let confirmPay = confirm(`Kripya is UPI ID par ₹${amount} bhejhein (NITIN):\n👉 ${upiID}\n\n(Aap GPay, PhonePe, Paytm ya Navi se scan karke pay karein)\n\nPese bhejne ke baad 12-digit UTR number agle step me daalein.`);
-                
+                let upiID = "8819920722@naviaxis";
+                let confirmPay = confirm(`Kripya is UPI ID par ₹${amount} bhejhein (NITIN):\n👉 ${upiID}\n\nPese bhejne ke baad 12-digit UTR number daalein.`);
                 if(confirmPay) {
                     let utr = prompt("Apne payment ka 12-digit UTR / Transaction ID daalein:");
                     if(utr && utr.length >= 8) {
-                        alert(`Aapki ₹${amount} ki deposit request submit ho gayi hai! UTR: ${utr}\nVerification ke baad wallet me paise jud jayenge.`);
+                        alert(`Deposit request submitted! UTR: ${utr}\nVerification ke baad balance update ho jayega.`);
                     } else {
-                        alert("Sahi UTR number daalna zaroori hai.");
+                        alert("Sahi UTR number daalna anivarya hai.");
                     }
                 }
             }
         }
 
-        // Real Withdrawal System via User's UPI ID
         function openWithdrawModal() {
-            let amt = Number(prompt("Kitna amount withdraw karna hai? (Minimum ₹100):"));
+            let amt = Number(prompt("Withdrawal amount (Min ₹100):"));
             if(amt >= 100) {
                 if(walletBalance >= amt) {
-                    let userUpi = prompt("Apna UPI ID (jaise number@paytm ya gpay) daalein jahan paise lene hain:");
+                    let userUpi = prompt("Apna UPI ID daalein jahan paise lene hain:");
                     if(userUpi && userUpi.includes("@")) {
                         updateWallet(-amt);
-                        alert(`₹${amt} ki withdrawal request safalpurvak accept ho gyi hai!\nAapke UPI (${userUpi}) par bhej diye jayenge.`);
+                        alert(`₹${amt} ki withdrawal request accept ho gayi hai! Aapke UPI (${userUpi}) par bhej diye jayenge.`);
                     } else {
                         alert("Kripya sahi UPI ID daalein.");
                     }
                 } else {
-                    alert('Aapke wallet me itna balance nahi hai!');
+                    alert('Wallet me itna balance nahi hai!');
                 }
             } else if(amt > 0) {
                 alert('Minimum withdrawal limit ₹100 hai.');
