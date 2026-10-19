@@ -6,6 +6,27 @@
     <title>NK Pockets - Casino & Games Hub</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Firebase App & Analytics SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+
+        // Aapki Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDlaKn481sp4laRz1KKCXm5KbKpecsZb3A",
+            authDomain: "nk-pockets.firebaseapp.com",
+            projectId: "nk-pockets",
+            storageBucket: "nk-pockets.appspot.com",
+            messagingSenderId: "306105734862",
+            appId: "1:306105734862:web:e11360991dc1515488629f",
+            measurementId: "G-MWZ3CZD8P0"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        console.log("Firebase Connected Successfully!");
+    </script>
 </head>
 <body class="bg-gray-950 text-white font-sans min-h-screen pb-10">
 
@@ -150,7 +171,7 @@
             
             currentMultiplier = 1.00;
             isPlayingAviator = true;
-            let crashAt = (Math.random() * 10 + 1).toFixed(2); // Random crash between 1x and 500x simulation
+            let crashAt = (Math.random() * 10 + 1).toFixed(2);
             if(Math.random() > 0.8) crashAt = (Math.random() * 490 + 10).toFixed(2);
 
             aviatorInterval = setInterval(() => {
@@ -190,7 +211,7 @@
             updateWallet(-20);
             
             const multipliers = [0, 1, 2, 5, 10, 50, 100, 500];
-            const weights = [50, 25, 12, 7, 3, 2, 0.8, 0.2]; // Probability
+            const weights = [50, 25, 12, 7, 3, 2, 0.8, 0.2];
             let rand = Math.random() * 100;
             let sum = 0;
             let selectedMult = 0;
