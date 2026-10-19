@@ -3,79 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NK Pockets - Real Money Casino Hub</title>
+    <title>NK Pockets - Real Gaming Hub</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Firebase App & Auth SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDlaKn481sp4laRz1KKCXm5KbKpecsZb3A",
-            authDomain: "nk-pockets.firebaseapp.com",
-            projectId: "nk-pockets",
-            storageBucket: "nk-pockets.appspot.com",
-            messagingSenderId: "306105734862",
-            appId: "1:306105734862:web:e11360991dc1515488629f",
-            measurementId: "G-MWZ3CZD8P0"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        // Real Google Login Trigger
-        window.realGoogleLogin = function() {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    const user = result.user;
-                    document.getElementById('user-name').innerText = user.displayName;
-                    document.getElementById('auth-container').style.display = 'none';
-                    document.getElementById('dashboard').style.display = 'block';
-                    giveWelcomeBonusOnce(user.uid);
-                })
-                .catch((error) => {
-                    alert("Google Login Error: " + error.message);
-                });
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('user-name').innerText = user.displayName;
-                document.getElementById('auth-container').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-            }
-        });
-    </script>
 </head>
 <body class="bg-gray-950 text-white font-sans min-h-screen pb-12">
 
-    <!-- Authentication / Login Container -->
-    <div id="auth-container" class="max-w-md mx-auto mt-16 p-6 bg-gray-900 rounded-xl shadow-2xl border border-gray-800">
-        <h2 class="text-2xl font-bold mb-6 text-center text-green-400">NK Pockets Real Gaming</h2>
+    <!-- Fast Login Container -->
+    <div id="auth-container" class="max-w-md mx-auto mt-20 p-6 bg-gray-900 rounded-xl shadow-2xl border border-gray-800">
+        <h2 class="text-2xl font-bold mb-2 text-center text-green-400">NK Pockets Gaming</h2>
+        <p class="text-xs text-center text-gray-400 mb-6">Apna Mobile Number ya Naam daalkar turant ID banayein aur ₹3 se ₹99 tak ka Bonus paayein!</p>
         
-        <!-- Real Google Login Button -->
-        <button onclick="realGoogleLogin()" class="w-full mb-4 flex items-center justify-center gap-2 bg-white text-black font-semibold py-3 rounded-lg hover:bg-gray-200 transition shadow-lg">
-            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google"> Login with Real Google (Gmail)
-        </button>
-
-        <div class="flex items-center my-4">
-            <div class="flex-grow border-t border-gray-700"></div>
-            <span class="px-3 text-gray-400 text-sm">OR</span>
-            <div class="flex-grow border-t border-gray-700"></div>
-        </div>
-
-        <!-- Mobile Number Login -->
-        <div id="mobile-form">
-            <input type="tel" id="mobile-input" placeholder="Enter Mobile Number" class="w-full p-3 mb-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-green-500">
-            <button onclick="sendOTP()" class="w-full bg-green-600 font-semibold py-3 rounded-lg hover:bg-green-500 transition">Get OTP & Login</button>
-        </div>
-
-        <div id="otp-section" class="hidden mt-4">
-            <input type="text" id="otp-input" placeholder="Enter 6-digit OTP" class="w-full p-3 mb-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-green-500">
-            <button onclick="verifyOTP()" class="w-full bg-blue-600 font-semibold py-3 rounded-lg hover:bg-blue-500 transition">Verify OTP</button>
-        </div>
+        <input type="text" id="user-input-name" placeholder="Apna Naam ya Mobile Number daalein" class="w-full p-3 mb-4 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-green-500">
+        
+        <button onclick="instantLogin()" class="w-full bg-green-600 hover:bg-green-500 font-bold py-3 rounded-lg transition shadow-lg">Start Game & Get Bonus</button>
     </div>
 
     <!-- Main Dashboard -->
@@ -84,11 +25,11 @@
         <div class="bg-gray-900 p-4 rounded-xl shadow-lg border border-gray-800 flex justify-between items-center mb-6">
             <div>
                 <h1 class="text-lg font-bold text-green-400">NK Pockets</h1>
-                <p class="text-xs text-gray-400">Welcome, <span id="user-name">Player</span></p>
+                <p class="text-xs text-gray-400">Player: <span id="display-name" class="text-white font-semibold">User</span></p>
             </div>
             <div class="text-right">
                 <p class="text-xs text-gray-400">Total Wallet</p>
-                <p class="text-xl font-bold text-yellow-400">₹<span id="wallet-balance">50.00</span></p>
+                <p class="text-xl font-bold text-yellow-400">₹<span id="wallet-balance">0.00</span></p>
             </div>
         </div>
 
@@ -100,7 +41,7 @@
 
         <!-- Aviator Game Section -->
         <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
-            <h3 class="text-lg font-bold text-red-400 mb-1">✈️ Aviator (Live Crash Game)</h3>
+            <h3 class="text-lg font-bold text-red-400 mb-1">✈️ Aviator (Crash Game)</h3>
             <p class="text-xs text-gray-400 mb-3">Fly high up to 500x multiplier!</p>
             <div class="bg-black p-4 rounded-lg mb-3 border border-gray-800">
                 <span id="aviator-multiplier" class="text-3xl font-extrabold text-green-400">1.00x</span>
@@ -111,7 +52,7 @@
             <p id="aviator-result" class="mt-2 text-sm font-semibold"></p>
         </div>
 
-        <!-- Real Working Fruit Slot Game (Instead of fake popup) -->
+        <!-- Fruit Slot Game -->
         <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
             <h3 class="text-lg font-bold text-yellow-400 mb-1">🍒 Fruit Slot (1x - 500x)</h3>
             <p class="text-xs text-gray-400 mb-3">Match 3 fruits to win big!</p>
@@ -132,9 +73,9 @@
         </div>
     </div>
 
-    <!-- JavaScript Real Logic -->
+    <!-- JavaScript Logic -->
     <script>
-        let walletBalance = 50.00; // Starting with welcome bonus
+        let walletBalance = 0.00;
         let aviatorInterval;
         let currentMultiplier = 1.00;
         let isPlayingAviator = false;
@@ -145,36 +86,24 @@
             document.getElementById('wallet-balance').innerText = walletBalance.toFixed(2);
         }
 
-        function giveWelcomeBonusOnce(uid) {
-            // Check local storage so bonus given only once per login
-            if(!localStorage.getItem('bonus_given_' + uid)) {
-                let bonus = Math.floor(Math.random() * (99 - 3 + 1)) + 3;
-                updateWallet(bonus);
-                alert(`🎉 Welcome Bonus Credited: ₹${bonus}!`);
-                localStorage.setItem('bonus_given_' + uid, 'true');
+        function instantLogin() {
+            let name = document.getElementById('user-input-name').value.trim();
+            if(!name) {
+                alert("Kripya apna naam ya mobile number daalein!");
+                return;
             }
+
+            document.getElementById('display-name').innerText = name;
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+
+            // Give random welcome bonus between 3 and 99 rupees instantly
+            let bonus = Math.floor(Math.random() * (99 - 3 + 1)) + 3;
+            updateWallet(bonus);
+            alert(`🎉 ID Created Successfully! You won a Welcome Bonus of ₹${bonus}!`);
         }
 
-        function sendOTP() {
-            const mobile = document.getElementById('mobile-input').value;
-            if(mobile.length < 10) { alert('Sahi mobile number daalein.'); return; }
-            document.getElementById('mobile-form').style.display = 'none';
-            document.getElementById('otp-section').style.display = 'block';
-            alert('OTP bhej diya gaya hai (Koi bhi 6 ank daalein)');
-        }
-
-        function verifyOTP() {
-            const otp = document.getElementById('otp-input').value;
-            if(otp.length === 6) {
-                document.getElementById('auth-container').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                alert('Login Successful!');
-            } else {
-                alert('Sahi 6-digit OTP daalein.');
-            }
-        }
-
-        // Real Working Fruit Slot Game
+        // Fruit Slot Game
         function playFruitSlot() {
             if(walletBalance < 10) { alert('Balance kam hai! Kam se kam ₹10 chahiye.'); return; }
             updateWallet(-10);
@@ -257,7 +186,7 @@
             }, 3000);
         }
 
-        // Real Deposit via Nitin's Navi UPI ID
+        // Deposit via Nitin's Navi UPI ID (8819920722@naviaxis)
         function openDepositModal() {
             let amount = prompt("Kitna amount add karna hai? (Jaise: 100, 500)");
             if(amount && !isNaN(amount) && amount > 0) {
