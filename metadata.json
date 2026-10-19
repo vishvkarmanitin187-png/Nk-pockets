@@ -1,0 +1,6 @@
+{
+  "name": "NK Pockets",
+  "description": "Earn rewards, spin wheel, and play prediction games",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
