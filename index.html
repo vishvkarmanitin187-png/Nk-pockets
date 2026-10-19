@@ -3,41 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NK Pockets - Real Money Gaming & Rewards Hub</title>
+    <title>NK Pockets - Real Money Gaming Hub</title>
     
-    <!-- SEO Meta Tags for Google Search Ranking -->
-    <meta name="description" content="NK Pockets is India's leading real money gaming and reward platform. Play Aviator, Fruit Slot, and win exciting cash prizes daily.">
-    <meta name="keywords" content="NK Pockets, NK Pockets gaming, real money game, aviator game india, earn money online, fruit slot game">
+    <meta name="description" content="NK Pockets is India's leading real money gaming and reward platform. Play Aviator, Fruit Slot, Ludo, and win exciting cash prizes.">
+    <meta name="keywords" content="NK Pockets, real money game, aviator game india, ludo earning app">
     <meta name="author" content="Nitin Vishwkarma">
     
-    <!-- Open Graph / Social Media Meta Tags -->
-    <meta property="og:title" content="NK Pockets - Real Money Gaming Hub">
-    <meta property="og:description" content="Play exciting games, spin the jackpot, and earn daily rewards on NK Pockets.">
-    <meta property="og:type" content="website">
-
-    <!-- Professional App Icon / Logo -->
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3076/3076137.png">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3076/3076137.png">
 
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="theme-color" content="#030712">
-    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,{
-        %22name%22: %22NK Pockets Gaming Hub%22,
-        %22short_name%22: %22NK Pockets%22,
-        %22start_url%22: %22/%22,
-        %22display%22: %22standalone%22,
-        %22background_color%22: %22%23030712%22,
-        %22theme_color%22: %22%2322c55e%22,
-        %22icons%22: [{%22src%22: %22https://cdn-icons-png.flaticon.com/512/3076/3076137.png%22, %22sizes%22: %22512x512%22, %22type%22: %22image/png%22}]
-    }">
 </head>
 <body class="bg-gray-950 text-white font-sans min-h-screen pb-12 select-none">
 
     <!-- Login Container -->
     <div id="auth-container" class="max-w-md mx-auto mt-16 p-6 bg-gray-900 rounded-2xl shadow-2xl border border-gray-800 mx-4">
         <div class="text-center mb-6">
-            <!-- Professional Logo -->
             <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-green-600 to-emerald-400 rounded-2xl shadow-lg mb-3">
                 <span class="text-3xl">🎮</span>
             </div>
@@ -48,10 +30,6 @@
         <input type="text" id="user-identifier" placeholder="Mobile Number ya Unique ID daalein" class="w-full p-3.5 mb-4 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-green-500 text-base shadow-inner">
         
         <button id="login-btn" class="w-full bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 font-bold py-3.5 rounded-xl transition shadow-lg text-base cursor-pointer">Secure Login & Play</button>
-        
-        <div class="mt-4 text-center">
-            <button id="install-app-btn" class="hidden text-xs text-blue-400 underline cursor-pointer">📲 Phone me App Install karein</button>
-        </div>
     </div>
 
     <!-- Main Dashboard -->
@@ -74,10 +52,32 @@
             <button id="withdraw-btn" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-xl font-semibold text-center transition shadow cursor-pointer text-sm">Withdraw</button>
         </div>
 
-        <!-- Aviator Game Section -->
-        <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
+        <!-- Games Grid (Multiple Real Games) -->
+        <h3 class="text-md font-bold mb-3 text-gray-300">🔥 Popular Real Games</h3>
+        <div class="grid grid-cols-2 gap-3 mb-6">
+            <div onclick="showGame('aviator')" class="bg-gray-900 p-4 rounded-xl border border-gray-800 text-center cursor-pointer hover:border-red-500 transition shadow">
+                <span class="text-3xl">✈️</span>
+                <p class="font-bold mt-2 text-sm text-red-400">Aviator Crash</p>
+            </div>
+            <div onclick="showGame('slot')" class="bg-gray-900 p-4 rounded-xl border border-gray-800 text-center cursor-pointer hover:border-yellow-500 transition shadow">
+                <span class="text-3xl">🍒</span>
+                <p class="font-bold mt-2 text-sm text-yellow-400">Fruit Slot</p>
+            </div>
+            <div onclick="showGame('ludo')" class="bg-gray-900 p-4 rounded-xl border border-gray-800 text-center cursor-pointer hover:border-blue-500 transition shadow">
+                <span class="text-3xl">🎲</span>
+                <p class="font-bold mt-2 text-sm text-blue-400">Ludo Quick</p>
+            </div>
+            <div onclick="showGame('teenpatti')" class="bg-gray-900 p-4 rounded-xl border border-gray-800 text-center cursor-pointer hover:border-purple-500 transition shadow">
+                <span class="text-3xl">🃏</span>
+                <p class="font-bold mt-2 text-sm text-purple-400">Teen Patti</p>
+            </div>
+        </div>
+
+        <!-- Game Screens (Dynamic) -->
+        
+        <!-- 1. Aviator Section -->
+        <div id="game-aviator" class="game-section bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
             <h3 class="text-lg font-bold text-red-400 mb-1">✈️ Aviator (Crash Game)</h3>
-            <p class="text-xs text-gray-400 mb-3">Fly high up to 500x multiplier!</p>
             <div class="bg-black p-4 rounded-xl mb-3 border border-gray-800">
                 <span id="aviator-multiplier" class="text-3xl font-extrabold text-green-400">1.00x</span>
             </div>
@@ -87,10 +87,9 @@
             <p id="aviator-result" class="mt-2 text-sm font-semibold"></p>
         </div>
 
-        <!-- Fruit Slot Game -->
-        <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
+        <!-- 2. Fruit Slot Section -->
+        <div id="game-slot" class="game-section bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center hidden">
             <h3 class="text-lg font-bold text-yellow-400 mb-1">🍒 Fruit Slot (1x - 500x)</h3>
-            <p class="text-xs text-gray-400 mb-3">Match 3 fruits to win real balance!</p>
             <div class="bg-black p-4 rounded-xl mb-3 border border-gray-800 flex justify-center gap-4 text-3xl">
                 <span id="slot-1">🍋</span>
                 <span id="slot-2">🍒</span>
@@ -98,6 +97,30 @@
             </div>
             <button id="slot-btn" class="w-full bg-yellow-600 hover:bg-yellow-500 py-2.5 rounded-xl font-bold text-black transition cursor-pointer">Spin Slot (₹10)</button>
             <p id="slot-result" class="mt-2 text-sm font-semibold text-yellow-300"></p>
+        </div>
+
+        <!-- 3. Ludo Quick Section -->
+        <div id="game-ludo" class="game-section bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center hidden">
+            <h3 class="text-lg font-bold text-blue-400 mb-1">🎲 Ludo Quick Dice</h3>
+            <p class="text-xs text-gray-400 mb-3">Roll 6 to Win Double!</p>
+            <div class="bg-black p-6 rounded-xl mb-3 border border-gray-800 text-5xl">
+                <span id="dice-result">🎲</span>
+            </div>
+            <button id="ludo-btn" class="w-full bg-blue-600 hover:bg-blue-500 py-2.5 rounded-xl font-bold transition cursor-pointer">Roll Dice (₹20)</button>
+            <p id="ludo-text" class="mt-2 text-sm font-semibold text-blue-300"></p>
+        </div>
+
+        <!-- 4. Teen Patti Section -->
+        <div id="game-teenpatti" class="game-section bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center hidden">
+            <h3 class="text-lg font-bold text-purple-400 mb-1">🃏 Teen Patti Card Game</h3>
+            <p class="text-xs text-gray-400 mb-3">Highest Card / Sequence wins!</p>
+            <div class="bg-black p-4 rounded-xl mb-3 border border-gray-800 flex justify-center gap-3 text-2xl">
+                <span id="card-1" class="bg-gray-800 p-3 rounded-lg">🎴</span>
+                <span id="card-2" class="bg-gray-800 p-3 rounded-lg">🎴</span>
+                <span id="card-3" class="bg-gray-800 p-3 rounded-lg">🎴</span>
+            </div>
+            <button id="tp-btn" class="w-full bg-purple-600 hover:bg-purple-500 py-2.5 rounded-xl font-bold transition cursor-pointer">Play Teen Patti (₹50)</button>
+            <p id="tp-result" class="mt-2 text-sm font-semibold text-purple-300"></p>
         </div>
 
         <!-- Watch Ads & Earn -->
@@ -133,25 +156,11 @@
         let isPlayingAviator = false;
         let betAmount = 0;
 
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('install-app-btn').classList.remove('hidden');
-        });
-
-        document.getElementById('install-app-btn').addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                let { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    document.getElementById('install-app-btn').classList.add('hidden');
-                }
-                deferredPrompt = null;
-            } else {
-                alert("App install karne ke liye Chrome Browser ke Menu (3 dots) par click karke 'Add to Home Screen' par click karein.");
-            }
-        });
+        // Switch Games View
+        window.showGame = function(gameName) {
+            document.querySelectorAll('.game-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById('game-' + gameName).classList.remove('hidden');
+        }
 
         function updateWallet(amount) {
             window.userWalletBalance += amount;
@@ -196,6 +205,7 @@
             }
         });
 
+        // Slot Game
         document.getElementById('slot-btn').addEventListener('click', () => {
             if(window.userWalletBalance < 10) { alert('Balance kam hai! Min ₹10 chahiye.'); return; }
             updateWallet(-10);
@@ -220,6 +230,47 @@
             }
         });
 
+        // Ludo Quick Game
+        document.getElementById('ludo-btn').addEventListener('click', () => {
+            if(window.userWalletBalance < 20) { alert('Balance kam hai! Min ₹20 chahiye.'); return; }
+            updateWallet(-20);
+            let diceRolls = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+            let roll = Math.floor(Math.random() * 6);
+            document.getElementById('dice-result').innerText = diceRolls[roll];
+
+            if(roll === 5) { // 6 aya
+                updateWallet(50);
+                document.getElementById('ludo-text').innerText = `🎉 Amazing! You rolled 6 and won ₹50!`;
+            } else {
+                document.getElementById('ludo-text').innerText = `😢 Rolled ${roll + 1}. Try again for 6!`;
+            }
+        });
+
+        // Teen Patti Game
+        document.getElementById('tp-btn').addEventListener('click', () => {
+            if(window.userWalletBalance < 50) { alert('Balance kam hai! Min ₹50 chahiye.'); return; }
+            updateWallet(-50);
+            let cards = ['A♠', 'K♥', 'Q♦', 'J♣', '10♠', '9♥', '8♦', '7♣', '6♠'];
+            let c1 = cards[Math.floor(Math.random() * cards.length)];
+            let c2 = cards[Math.floor(Math.random() * cards.length)];
+            let c3 = cards[Math.floor(Math.random() * cards.length)];
+
+            document.getElementById('card-1').innerText = c1;
+            document.getElementById('card-2').innerText = c2;
+            document.getElementById('card-3').innerText = c3;
+
+            if(c1[0] === c2[0] && c2[0] === c3[0]) {
+                updateWallet(300);
+                document.getElementById('tp-result').innerText = `🔥 TRAIL (Pari)! You won ₹300!`;
+            } else if(c1[0] === c2[0] || c2[0] === c3[0]) {
+                updateWallet(100);
+                document.getElementById('tp-result').innerText = `✨ Pair! You won ₹100!`;
+            } else {
+                document.getElementById('tp-result').innerText = `😢 High Card. Better luck next time!`;
+            }
+        });
+
+        // Aviator Game
         document.getElementById('aviator-btn').addEventListener('click', () => {
             betAmount = Number(document.getElementById('aviator-bet').value);
             if(!betAmount || betAmount <= 0) { alert('Sahi bet amount daalein!'); return; }
@@ -260,6 +311,7 @@
             document.getElementById('cashout-btn').classList.remove('hidden');
         });
 
+        // Deposit via UPI ID (8819920722@naviaxis)
         document.getElementById('deposit-btn').addEventListener('click', () => {
             let amount = prompt("Kitna amount add karna hai? (Jaise: 100, 500)");
             if(amount && !isNaN(amount) && amount > 0) {
