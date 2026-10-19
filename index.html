@@ -6,70 +6,6 @@
     <title>NK Pockets - Real Money Gaming Hub</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDlaKn481sp4laRz1KKCXm5KbKpecsZb3A",
-            authDomain: "nk-pockets.firebaseapp.com",
-            projectId: "nk-pockets",
-            storageBucket: "nk-pockets.appspot.com",
-            messagingSenderId: "306105734862",
-            appId: "1:306105734862:web:e11360991dc1515488629f",
-            measurementId: "G-MWZ3CZD8P0"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        let currentUserKey = "";
-
-        window.handleRealDatabaseLogin = async function() {
-            let inputId = document.getElementById('user-identifier').value.trim();
-            if(!inputId) {
-                alert("Kripya apna Mobile Number ya Unique ID daalein!");
-                return;
-            }
-
-            currentUserKey = inputId.replace(/[^a-zA-Z0-9]/g, "_");
-            const userRef = doc(db, "users", currentUserKey);
-            const userSnap = await getDoc(userRef);
-
-            let currentBalance = 0.00;
-
-            if (userSnap.exists()) {
-                currentBalance = userSnap.data().balance;
-                alert(`Welcome back, ${inputId}! Your balance loaded from Database.`);
-            } else {
-                let welcomeBonus = Math.floor(Math.random() * (99 - 3 + 1)) + 3;
-                currentBalance = welcomeBonus;
-                await setDoc(userRef, {
-                    identifier: inputId,
-                    balance: currentBalance,
-                    createdAt: new Date().toISOString()
-                });
-                alert(`🎉 Account Created in Database! Welcome Bonus: ₹${welcomeBonus}`);
-            }
-
-            window.userWalletBalance = currentBalance;
-            document.getElementById('display-name').innerText = inputId;
-            document.getElementById('wallet-balance').innerText = currentBalance.toFixed(2);
-            document.getElementById('auth-container').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-        };
-
-        window.syncBalanceToFirestore = async function(newBalance) {
-            if (!currentUserKey) return;
-            const userRef = doc(db, "users", currentUserKey);
-            try {
-                await updateDoc(userRef, { balance: newBalance });
-            } catch (e) {
-                console.error("Error updating database: ", e);
-            }
-        };
-    </script>
 </head>
 <body class="bg-gray-950 text-white font-sans min-h-screen pb-12">
 
@@ -80,7 +16,7 @@
         
         <input type="text" id="user-identifier" placeholder="Enter Mobile Number or ID" class="w-full p-3 mb-4 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-green-500">
         
-        <button onclick="handleRealDatabaseLogin()" class="w-full bg-green-600 hover:bg-green-500 font-bold py-3 rounded-lg transition shadow-lg">Secure Login & Play</button>
+        <button id="login-btn" class="w-full bg-green-600 hover:bg-green-500 font-bold py-3 rounded-lg transition shadow-lg cursor-pointer">Secure Login & Play</button>
     </div>
 
     <!-- Main Dashboard -->
@@ -99,8 +35,8 @@
 
         <!-- Quick Actions -->
         <div class="grid grid-cols-2 gap-4 mb-6">
-            <button onclick="openDepositModal()" class="bg-blue-600 hover:bg-blue-500 py-3 rounded-lg font-semibold text-center transition shadow">Add Money (UPI)</button>
-            <button onclick="openWithdrawModal()" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-lg font-semibold text-center transition shadow">Withdraw</button>
+            <button id="deposit-btn" class="bg-blue-600 hover:bg-blue-500 py-3 rounded-lg font-semibold text-center transition shadow cursor-pointer">Add Money (UPI)</button>
+            <button id="withdraw-btn" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-lg font-semibold text-center transition shadow cursor-pointer">Withdraw</button>
         </div>
 
         <!-- Aviator Game Section -->
@@ -111,8 +47,8 @@
                 <span id="aviator-multiplier" class="text-3xl font-extrabold text-green-400">1.00x</span>
             </div>
             <input type="number" id="aviator-bet" placeholder="Bet Amount (₹)" class="w-full p-2 mb-3 bg-gray-800 border border-gray-700 rounded-lg text-center text-white">
-            <button onclick="startAviator()" id="aviator-btn" class="w-full bg-red-600 hover:bg-red-500 py-2 rounded-lg font-bold transition mb-2">Place Bet & Fly</button>
-            <button onclick="cashOut()" id="cashout-btn" class="w-full bg-green-600 hover:bg-green-500 py-2 rounded-lg font-bold transition hidden">CASH OUT</button>
+            <button id="aviator-btn" class="w-full bg-red-600 hover:bg-red-500 py-2 rounded-lg font-bold transition mb-2 cursor-pointer">Place Bet & Fly</button>
+            <button id="cashout-btn" class="w-full bg-green-600 hover:bg-green-500 py-2 rounded-lg font-bold transition hidden cursor-pointer">CASH OUT</button>
             <p id="aviator-result" class="mt-2 text-sm font-semibold"></p>
         </div>
 
@@ -125,20 +61,37 @@
                 <span id="slot-2">🍒</span>
                 <span id="slot-3">⭐</span>
             </div>
-            <button onclick="playFruitSlot()" class="w-full bg-yellow-600 hover:bg-yellow-500 py-2 rounded-lg font-bold text-black transition">Spin Slot (₹10)</button>
+            <button id="slot-btn" class="w-full bg-yellow-600 hover:bg-yellow-500 py-2 rounded-lg font-bold text-black transition cursor-pointer">Spin Slot (₹10)</button>
             <p id="slot-result" class="mt-2 text-sm font-semibold text-yellow-300"></p>
         </div>
 
         <!-- Watch Ads & Earn -->
         <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 text-center">
             <h3 class="text-lg font-bold mb-2">Watch Ads & Earn 📺</h3>
-            <button onclick="watchAd()" id="ad-btn" class="bg-amber-600 hover:bg-amber-500 px-6 py-2 rounded-lg font-bold transition">Watch Ad (₹0.50)</button>
+            <button id="ad-btn" class="bg-amber-600 hover:bg-amber-500 px-6 py-2 rounded-lg font-bold transition cursor-pointer">Watch Ad (₹0.50)</button>
             <p id="ad-result" class="mt-2 text-sm text-green-400 font-semibold"></p>
         </div>
     </div>
 
-    <!-- JavaScript Game & Database Sync Logic -->
-    <script>
+    <!-- Firebase & Logic Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDlaKn481sp4laRz1KKCXm5KbKpecsZb3A",
+            authDomain: "nk-pockets.firebaseapp.com",
+            projectId: "nk-pockets",
+            storageBucket: "nk-pockets.appspot.com",
+            messagingSenderId: "306105734862",
+            appId: "1:306105734862:web:e11360991dc1515488629f",
+            measurementId: "G-MWZ3CZD8P0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let currentUserKey = "";
         window.userWalletBalance = 0.00;
         let aviatorInterval;
         let currentMultiplier = 1.00;
@@ -148,13 +101,45 @@
         function updateWallet(amount) {
             window.userWalletBalance += amount;
             document.getElementById('wallet-balance').innerText = window.userWalletBalance.toFixed(2);
-            if(window.syncBalanceToFirestore) {
-                window.syncBalanceToFirestore(window.userWalletBalance);
+            if (currentUserKey) {
+                updateDoc(doc(db, "users", currentUserKey), { balance: window.userWalletBalance }).catch(e => console.error(e));
             }
         }
 
-        // Fruit Slot Game Logic
-        function playFruitSlot() {
+        // Login Handler
+        document.getElementById('login-btn').addEventListener('click', async () => {
+            let inputId = document.getElementById('user-identifier').value.trim();
+            if(!inputId) {
+                alert("Kripya apna Mobile Number ya Unique ID daalein!");
+                return;
+            }
+
+            currentUserKey = inputId.replace(/[^a-zA-Z0-9]/g, "_");
+            const userRef = doc(db, "users", currentUserKey);
+            const userSnap = await getDoc(userRef);
+
+            if (userSnap.exists()) {
+                window.userWalletBalance = userSnap.data().balance;
+                alert(`Welcome back, ${inputId}! Balance loaded.`);
+            } else {
+                let welcomeBonus = Math.floor(Math.random() * (99 - 3 + 1)) + 3;
+                window.userWalletBalance = welcomeBonus;
+                await setDoc(userRef, {
+                    identifier: inputId,
+                    balance: window.userWalletBalance,
+                    createdAt: new Date().toISOString()
+                });
+                alert(`🎉 Account Created! Welcome Bonus: ₹${welcomeBonus}`);
+            }
+
+            document.getElementById('display-name').innerText = inputId;
+            document.getElementById('wallet-balance').innerText = window.userWalletBalance.toFixed(2);
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+        });
+
+        // Fruit Slot
+        document.getElementById('slot-btn').addEventListener('click', () => {
             if(window.userWalletBalance < 10) { alert('Balance kam hai! Kam se kam ₹10 chahiye.'); return; }
             updateWallet(-10);
 
@@ -177,10 +162,10 @@
             } else {
                 document.getElementById('slot-result').innerText = `😢 No match. Try again!`;
             }
-        }
+        });
 
-        // Aviator Game Logic
-        function startAviator() {
+        // Aviator
+        document.getElementById('aviator-btn').addEventListener('click', () => {
             betAmount = Number(document.getElementById('aviator-bet').value);
             if(!betAmount || betAmount <= 0) { alert('Sahi bet amount daalein!'); return; }
             if(window.userWalletBalance < betAmount) { alert('Wallet me itna balance nahi hai!'); return; }
@@ -208,9 +193,9 @@
                     }
                 }
             }, 100);
-        }
+        });
 
-        function cashOut() {
+        document.getElementById('cashout-btn').addEventListener('click', () => {
             if(!isPlayingAviator) return;
             clearInterval(aviatorInterval);
             isPlayingAviator = false;
@@ -222,9 +207,10 @@
             document.getElementById('aviator-result').className = 'mt-2 text-sm font-semibold text-green-400';
             document.getElementById('aviator-btn').classList.remove('hidden');
             document.getElementById('cashout-btn').classList.add('hidden');
-        }
+        });
 
-        function watchAd() {
+        // Watch Ad
+        document.getElementById('ad-btn').addEventListener('click', () => {
             const btn = document.getElementById('ad-btn');
             btn.disabled = true;
             btn.innerText = 'Watching Ad...';
@@ -234,13 +220,13 @@
                 btn.disabled = false;
                 btn.innerText = 'Watch Ad (₹0.50)';
             }, 3000);
-        }
+        });
 
-        // Real Deposit via Nitin's Navi UPI ID (8819920722@naviaxis)[span_1](start_span)[span_1](end_span)
-        function openDepositModal() {
+        // Deposit via Navi UPI ID (8819920722@naviaxis)[span_0](start_span)[span_0](end_span)
+        document.getElementById('deposit-btn').addEventListener('click', () => {
             let amount = prompt("Kitna amount add karna hai? (Jaise: 100, 500)");
             if(amount && !isNaN(amount) && amount > 0) {
-                let upiID = "8819920722@naviaxis"; // Nitin's Navi UPI ID[span_2](start_span)[span_2](end_span)
+                let upiID = "8819920722@naviaxis"; //[span_1](start_span)[span_1](end_span)
                 let confirmPay = confirm(`Kripya is UPI ID par ₹${amount} bhejhein (NITIN):\n👉 ${upiID}\n\nPese bhejne ke baad 12-digit UTR number daalein.`);
                 if(confirmPay) {
                     let utr = prompt("Apne payment ka 12-digit UTR / Transaction ID daalein:");
@@ -251,9 +237,10 @@
                     }
                 }
             }
-        }
+        });
 
-        function openWithdrawModal() {
+        // Withdraw
+        document.getElementById('withdraw-btn').addEventListener('click', () => {
             let amt = Number(prompt("Withdrawal amount (Min ₹100):"));
             if(amt >= 100) {
                 if(window.userWalletBalance >= amt) {
@@ -270,7 +257,7 @@
             } else if(amt > 0) {
                 alert('Minimum withdrawal limit ₹100 hai.');
             }
-        }
+        });
     </script>
 </body>
 </html>
