@@ -3,20 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NK Pockets - Real Money Gaming Hub</title>
+    <title>NK Pockets - Real Gaming Hub</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="theme-color" content="#030712">
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,{
+        %22name%22: %22NK Pockets Real Gaming%22,
+        %22short_name%22: %22NK Pockets%22,
+        %22start_url%22: %22/%22,
+        %22display%22: %22standalone%22,
+        %22background_color%22: %22%23030712%22,
+        %22theme_color%22: %22%2322c55e%22,
+        %22icons%22: [{%22src%22: %22https://cdn-icons-png.flaticon.com/512/3076/3076137.png%22, %22sizes%22: %22512x512%22, %22type%22: %22image/png%22}]
+    }">
 </head>
-<body class="bg-gray-950 text-white font-sans min-h-screen pb-12">
+<body class="bg-gray-950 text-white font-sans min-h-screen pb-12 select-none">
 
     <!-- Login Container -->
-    <div id="auth-container" class="max-w-md mx-auto mt-20 p-6 bg-gray-900 rounded-xl shadow-2xl border border-gray-800">
-        <h2 class="text-2xl font-bold mb-2 text-center text-green-400">NK Pockets Real Gaming</h2>
-        <p class="text-xs text-center text-gray-400 mb-6">Database Connected System: Enter Mobile/ID to Login & Get Real Bonus!</p>
+    <div id="auth-container" class="max-w-md mx-auto mt-20 p-6 bg-gray-900 rounded-xl shadow-2xl border border-gray-800 mx-4">
+        <div class="text-center mb-4">
+            <span class="text-4xl">🎮</span>
+            <h2 class="text-2xl font-bold mt-2 text-green-400">NK Pockets Gaming</h2>
+            <p class="text-xs text-gray-400 mt-1">Mobile number ya ID daalkar login karein aur turant bonus paayein!</p>
+        </div>
         
-        <input type="text" id="user-identifier" placeholder="Enter Mobile Number or ID" class="w-full p-3 mb-4 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-green-500">
+        <input type="text" id="user-identifier" placeholder="Mobile Number ya ID daalein" class="w-full p-3 mb-4 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-green-500 text-base">
         
-        <button id="login-btn" class="w-full bg-green-600 hover:bg-green-500 font-bold py-3 rounded-lg transition shadow-lg cursor-pointer">Secure Login & Play</button>
+        <button id="login-btn" class="w-full bg-green-600 hover:bg-green-500 font-bold py-3 rounded-lg transition shadow-lg text-base cursor-pointer">Secure Login & Play</button>
+        
+        <div class="mt-4 text-center">
+            <button id="install-app-btn" class="hidden text-xs text-blue-400 underline cursor-pointer">📲 Phone me App Install karein</button>
+        </div>
     </div>
 
     <!-- Main Dashboard -->
@@ -35,8 +52,8 @@
 
         <!-- Quick Actions -->
         <div class="grid grid-cols-2 gap-4 mb-6">
-            <button id="deposit-btn" class="bg-blue-600 hover:bg-blue-500 py-3 rounded-lg font-semibold text-center transition shadow cursor-pointer">Add Money (UPI)</button>
-            <button id="withdraw-btn" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-lg font-semibold text-center transition shadow cursor-pointer">Withdraw</button>
+            <button id="deposit-btn" class="bg-blue-600 hover:bg-blue-500 py-3 rounded-lg font-semibold text-center transition shadow cursor-pointer text-sm">Add Money (UPI)</button>
+            <button id="withdraw-btn" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-lg font-semibold text-center transition shadow cursor-pointer text-sm">Withdraw</button>
         </div>
 
         <!-- Aviator Game Section -->
@@ -73,7 +90,7 @@
         </div>
     </div>
 
-    <!-- Firebase & Logic Script -->
+    <!-- Firebase & App Logic Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -98,6 +115,27 @@
         let isPlayingAviator = false;
         let betAmount = 0;
 
+        // PWA Install Prompt Capture
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('install-app-btn').classList.remove('hidden');
+        });
+
+        document.getElementById('install-app-btn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                let { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    document.getElementById('install-app-btn').classList.add('hidden');
+                }
+                deferredPrompt = null;
+            } else {
+                alert("App install karne ke liye Chrome Browser ke Menu (3 dots) par click karke 'Add to Home Screen' ya 'Install App' par click karein.");
+            }
+        });
+
         function updateWallet(amount) {
             window.userWalletBalance += amount;
             document.getElementById('wallet-balance').innerText = window.userWalletBalance.toFixed(2);
@@ -106,7 +144,7 @@
             }
         }
 
-        // Login Handler
+        // Login Handler with Direct Click Fix
         document.getElementById('login-btn').addEventListener('click', async () => {
             let inputId = document.getElementById('user-identifier').value.trim();
             if(!inputId) {
@@ -138,7 +176,7 @@
             document.getElementById('dashboard').style.display = 'block';
         });
 
-        // Fruit Slot
+        // Fruit Slot Game
         document.getElementById('slot-btn').addEventListener('click', () => {
             if(window.userWalletBalance < 10) { alert('Balance kam hai! Kam se kam ₹10 chahiye.'); return; }
             updateWallet(-10);
@@ -164,7 +202,7 @@
             }
         });
 
-        // Aviator
+        // Aviator Game
         document.getElementById('aviator-btn').addEventListener('click', () => {
             betAmount = Number(document.getElementById('aviator-bet').value);
             if(!betAmount || betAmount <= 0) { alert('Sahi bet amount daalein!'); return; }
@@ -222,11 +260,11 @@
             }, 3000);
         });
 
-        // Deposit via Navi UPI ID (8819920722@naviaxis)[span_0](start_span)[span_0](end_span)
+        // Deposit via Navi UPI ID (8819920722@naviaxis)
         document.getElementById('deposit-btn').addEventListener('click', () => {
             let amount = prompt("Kitna amount add karna hai? (Jaise: 100, 500)");
             if(amount && !isNaN(amount) && amount > 0) {
-                let upiID = "8819920722@naviaxis"; //[span_1](start_span)[span_1](end_span)
+                let upiID = "8819920722@naviaxis"; //
                 let confirmPay = confirm(`Kripya is UPI ID par ₹${amount} bhejhein (NITIN):\n👉 ${upiID}\n\nPese bhejne ke baad 12-digit UTR number daalein.`);
                 if(confirmPay) {
                     let utr = prompt("Apne payment ka 12-digit UTR / Transaction ID daalein:");
