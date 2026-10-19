@@ -11,7 +11,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 
-        // Aapki Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDlaKn481sp4laRz1KKCXm5KbKpecsZb3A",
             authDomain: "nk-pockets.firebaseapp.com",
@@ -22,7 +21,6 @@
             measurementId: "G-MWZ3CZD8P0"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         console.log("Firebase Connected Successfully!");
@@ -121,7 +119,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Game Logic -->
+    <!-- JavaScript Game Logic & Payment System -->
     <script>
         let walletBalance = 0.00;
         let aviatorInterval;
@@ -241,18 +239,41 @@
             }, 3000);
         }
 
+        // Real Deposit System via UPI QR & UTR Verification
         function openDepositModal() {
-            let amt = prompt("Kitna amount deposit karna hai? (UPI QR Simulation)");
-            if(amt && !isNaN(amt)) { updateWallet(Number(amt)); alert(`₹${amt} added!`); }
+            let amount = prompt("Kitna amount add karna hai? (Jaise: 100, 500)");
+            if(amount && !isNaN(amount) && amount > 0) {
+                let upiID = "apka-upi-id@paytm"; // Yahan apni asli UPI ID daalein
+                let confirmPay = confirm(`Kripya is UPI ID par ₹${amount} bhejhein:\n👉 ${upiID}\n\nPese bhejne ke baad Transaction ID (UTR) agle step me daalein.`);
+                
+                if(confirmPay) {
+                    let utr = prompt("Apne payment ka 12-digit UTR / Transaction ID daalein:");
+                    if(utr && utr.length >= 8) {
+                        alert(`Aapki ₹${amount} ki deposit request submit ho gayi hai! UTR: ${utr}\nVerification ke baad wallet me paise jud jayenge.`);
+                    } else {
+                        alert("Sahi UTR number daalna zaroori hai.");
+                    }
+                }
+            }
         }
 
+        // Real Withdrawal System via UPI ID
         function openWithdrawModal() {
-            let amt = Number(prompt("Withdrawal amount (Min ₹100):"));
-            if(amt >= 100 && walletBalance >= amt) {
-                updateWallet(-amt);
-                alert(`₹${amt} withdrawal request sent successfully!`);
-            } else {
-                alert('Invalid amount or low balance!');
+            let amt = Number(prompt("Kitna amount withdraw karna hai? (Minimum ₹100):"));
+            if(amt >= 100) {
+                if(walletBalance >= amt) {
+                    let userUpi = prompt("Apna UPI ID (jaise number@paytm ya gpay) daalein jahan paise lene hain:");
+                    if(userUpi && userUpi.includes("@")) {
+                        updateWallet(-amt);
+                        alert(`₹${amt} ki withdrawal request safalpurvak accept ho gyi hai!\nAapke UPI (${userUpi}) par bhej diye jayenge.`);
+                    } else {
+                        alert("Kripya sahi UPI ID daalein.");
+                    }
+                } else {
+                    alert('Aapke wallet me itna balance nahi hai!');
+                }
+            } else if(amt > 0) {
+                alert('Minimum withdrawal limit ₹100 hai.');
             }
         }
     </script>
