@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NK Pockets - Earnview Money</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white font-sans min-h-screen">
+
+    <!-- Authentication / Login Container -->
+    <div id="auth-container" class="max-w-md mx-auto mt-16 p-6 bg-gray-900 rounded-xl shadow-2xl border border-gray-800">
+        <h2 class="text-2xl font-bold mb-6 text-center text-green-400">NK Pockets Gaming</h2>
+        
+        <!-- Google Login Button -->
+        <button onclick="handleGoogleLogin()" class="w-full mb-4 flex items-center justify-center gap-2 bg-white text-black font-semibold py-3 rounded-lg hover:bg-gray-200 transition">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google"> Continue with Google (Gmail)
+        </button>
+
+        <div class="flex items-center my-4">
+            <div class="flex-grow border-t border-gray-700"></div>
+            <span class="px-3 text-gray-400 text-sm">OR</span>
+            <div class="flex-grow border-t border-gray-700"></div>
+        </div>
+
+        <!-- Mobile Number Login -->
+        <div id="mobile-form">
+            <input type="tel" id="mobile-input" placeholder="Enter Mobile Number" class="w-full p-3 mb-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-green-500">
+            <button onclick="sendOTP()" class="w-full bg-green-600 font-semibold py-3 rounded-lg hover:bg-green-500 transition">Get OTP</button>
+        </div>
+
+        <!-- OTP Section (Hidden initially) -->
+        <div id="otp-section" class="hidden mt-4">
+            <input type="text" id="otp-input" placeholder="Enter 6-digit OTP" class="w-full p-3 mb-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-green-500">
+            <button onclick="verifyOTP()" class="w-full bg-blue-600 font-semibold py-3 rounded-lg hover:bg-blue-500 transition">Verify & Login</button>
+        </div>
+    </div>
+
+    <!-- Main Dashboard (Hidden until login) -->
+    <div id="dashboard" class="hidden max-w-md mx-auto p-4 pb-12">
+        <!-- Header / Wallet -->
+        <div class="bg-gray-900 p-4 rounded-xl shadow-lg border border-gray-800 flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-lg font-bold text-green-400">NK Pockets</h1>
+                <p class="text-xs text-gray-400">Welcome, User</p>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-gray-400">Total Wallet</p>
+                <p class="text-xl font-bold text-yellow-400">₹<span id="wallet-balance">0.00</span></p>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <button onclick="openDepositModal()" class="bg-blue-600 hover:bg-blue-500 py-3 rounded-lg font-semibold text-center transition">Add Money</button>
+            <button onclick="openWithdrawModal()" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-lg font-semibold text-center transition">Withdraw</button>
+        </div>
+
+        <!-- Lucky Spin Game -->
+        <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
+            <h3 class="text-lg font-bold mb-2">Lucky Spin Wheel 🎡</h3>
+            <p class="text-xs text-gray-400 mb-4">Spend ₹10 to spin and win up to ₹100!</p>
+            <button onclick="spinWheel()" class="bg-green-600 hover:bg-green-500 px-6 py-2 rounded-lg font-bold transition">Spin Now</button>
+            <p id="spin-result" class="mt-3 text-sm text-yellow-300 font-semibold"></p>
+        </div>
+
+        <!-- Watch Ads & Earn -->
+        <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
+            <h3 class="text-lg font-bold mb-2">Watch Ads & Earn 📺</h3>
+            <p class="text-xs text-gray-400 mb-4">Watch a short simulated ad to earn ₹0.50</p>
+            <button onclick="watchAd()" id="ad-btn" class="bg-amber-600 hover:bg-amber-500 px-6 py-2 rounded-lg font-bold transition">Watch Ad</button>
+            <p id="ad-result" class="mt-3 text-sm text-green-400 font-semibold"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let walletBalance = 0.00;
+
+        function updateWallet(amount) {
+            walletBalance += amount;
+            document.getElementById('wallet-balance').innerText = walletBalance.toFixed(2);
+        }
+
+        function giveWelcomeBonus() {
+            // Random bonus between 3 and 99 rupees
+            const randomBonus = Math.floor(Math.random() * (99 - 3 + 1)) + 3;
+            updateWallet(randomBonus);
+            alert(`🎉 Login Successful! You won a Welcome Bonus of ₹${randomBonus}!`);
+            
+            // Switch screen
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+        }
+
+        function handleGoogleLogin() {
+            setTimeout(() => {
+                giveWelcomeBonus();
+            }, 500);
+        }
+
+        function sendOTP() {
+            const mobile = document.getElementById('mobile-input').value;
+            if(mobile.length < 10) {
+                alert('Kripya sahi mobile number darj karein.');
+                return;
+            }
+            document.getElementById('mobile-form').style.display = 'none';
+            document.getElementById('otp-section').style.display = 'block';
+            alert('OTP bhej diya gaya hai (Simulation: Koi bhi 6 ank daalein)');
+        }
+
+        function verifyOTP() {
+            const otp = document.getElementById('otp-input').value;
+            if(otp.length === 6) {
+                giveWelcomeBonus();
+            } else {
+                alert('Kripya 6 anko ka valid OTP darj karein.');
+            }
+        }
+
+        function spinWheel() {
+            if(walletBalance < 10) {
+                alert('Spin karne ke liye kam se kam ₹10 hone chahiye!');
+                return;
+            }
+            updateWallet(-10); // Deduct spin fee
+            const winnings = [0, 5, 10, 20, 50, 100];
+            const prize = winnings[Math.floor(Math.random() * winnings.length)];
+            updateWallet(prize);
+            document.getElementById('spin-result').innerText = prize > 0 ? `Aapne jeete ₹${prize}! 🎊` : `Oops! Is baar kuch nahi mila.`;
+        }
+
+        function watchAd() {
+            const adBtn = document.getElementById('ad-btn');
+            adBtn.disabled = true;
+            adBtn.innerText = 'Ad chal rahi hai... (5s)';
+            
+            setTimeout(() => {
+                updateWallet(0.50);
+                document.getElementById('ad-result').innerText = 'Ad dekhne ke liye ₹0.50 mil gaye! ✅';
+                adBtn.disabled = false;
+                adBtn.innerText = 'Watch Ad';
+            }, 5000);
+        }
+
+        function openDepositModal() {
+            let amount = prompt("Kitna amount deposit karna hai? (UPI QR Simulation)");
+            if(amount && !isNaN(amount)) {
+                updateWallet(Number(amount));
+                alert(`₹${amount} safalpurvak add ho gaye hain!`);
+            }
+        }
+
+        function openWithdrawModal() {
+            let amount = prompt("Kitna amount withdraw karna hai? (Minimum ₹100)");
+            amount = Number(amount);
+            if(amount >= 100) {
+                if(walletBalance >= amount) {
+                    updateWallet(-amount);
+                    alert(`₹${amount} ki withdrawal request accept ho gayi hai! Aapke UPI me bhej diye jayenge.`);
+                } else {
+                    alert('Wallet me itna balance nahi hai!');
+                }
+            } else if(amount > 0) {
+                alert('Minimum withdrawal limit ₹100 hai.');
+            }
+        }
+    </script>
+</body>
+</html>
