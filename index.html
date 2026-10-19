@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NK Pockets - Earnview Money</title>
+    <title>NK Pockets - Casino & Games Hub</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-950 text-white font-sans min-h-screen">
+<body class="bg-gray-950 text-white font-sans min-h-screen pb-10">
 
     <!-- Authentication / Login Container -->
     <div id="auth-container" class="max-w-md mx-auto mt-16 p-6 bg-gray-900 rounded-xl shadow-2xl border border-gray-800">
@@ -38,7 +38,7 @@
     </div>
 
     <!-- Main Dashboard (Hidden until login) -->
-    <div id="dashboard" class="hidden max-w-md mx-auto p-4 pb-12">
+    <div id="dashboard" class="hidden max-w-md mx-auto p-4">
         <!-- Header / Wallet -->
         <div class="bg-gray-900 p-4 rounded-xl shadow-lg border border-gray-800 flex justify-between items-center mb-6">
             <div>
@@ -57,26 +57,56 @@
             <button onclick="openWithdrawModal()" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-lg font-semibold text-center transition">Withdraw</button>
         </div>
 
-        <!-- Lucky Spin Game -->
+        <!-- Aviator Game Section (1x to 500x Multiplier) -->
         <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
-            <h3 class="text-lg font-bold mb-2">Lucky Spin Wheel 🎡</h3>
-            <p class="text-xs text-gray-400 mb-4">Spend ₹10 to spin and win up to ₹100!</p>
-            <button onclick="spinWheel()" class="bg-green-600 hover:bg-green-500 px-6 py-2 rounded-lg font-bold transition">Spin Now</button>
-            <p id="spin-result" class="mt-3 text-sm text-yellow-300 font-semibold"></p>
+            <h3 class="text-lg font-bold text-red-400 mb-1">✈️ Aviator (Crash Game)</h3>
+            <p class="text-xs text-gray-400 mb-3">Fly high up to 500x multiplier!</p>
+            <div class="bg-black p-4 rounded-lg mb-3 border border-gray-800">
+                <span id="aviator-multiplier" class="text-3xl font-extrabold text-green-400">1.00x</span>
+            </div>
+            <input type="number" id="aviator-bet" placeholder="Bet Amount (₹)" class="w-full p-2 mb-3 bg-gray-800 border border-gray-700 rounded-lg text-center text-white">
+            <button onclick="startAviator()" id="aviator-btn" class="w-full bg-red-600 hover:bg-red-500 py-2 rounded-lg font-bold transition mb-2">Place Bet & Fly</button>
+            <button onclick="cashOut()" id="cashout-btn" class="w-full bg-green-600 hover:bg-green-500 py-2 rounded-lg font-bold transition hidden">CASH OUT</button>
+            <p id="aviator-result" class="mt-2 text-sm font-semibold"></p>
+        </div>
+
+        <!-- Jackpot & Multiplier Games -->
+        <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
+            <h3 class="text-lg font-bold text-yellow-400 mb-1">🎰 Mega Jackpot & 500x Games</h3>
+            <p class="text-xs text-gray-400 mb-3">Spin the jackpot wheel or test 1x-500x slots!</p>
+            <button onclick="playJackpot()" class="w-full bg-yellow-600 hover:bg-yellow-500 py-3 rounded-lg font-bold text-black transition mb-3">Play Jackpot (₹20)</button>
+            <p id="jackpot-result" class="text-sm font-semibold text-yellow-300"></p>
+        </div>
+
+        <!-- 30+ Games Category List -->
+        <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6">
+            <h3 class="text-lg font-bold mb-3 text-center">🎮 All 30+ Games Hub</h3>
+            <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Color Prediction Game...')">🎨 Color Prediction</div>
+                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Dice Roller...')">🎲 Dice Roller</div>
+                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Mines Game...')">💣 Mines</div>
+                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Teen Patti...')">🃏 Teen Patti</div>
+                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Andar Bahar...')">🎴 Andar Bahar</div>
+                <div class="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="alert('Opening Fruit Slot...')">🍒 Fruit Slot</div>
+            </div>
+            <p class="text-center text-xs text-gray-500 mt-3">+ 24 More Action & Arcade Games Available</p>
         </div>
 
         <!-- Watch Ads & Earn -->
-        <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
+        <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 text-center">
             <h3 class="text-lg font-bold mb-2">Watch Ads & Earn 📺</h3>
-            <p class="text-xs text-gray-400 mb-4">Watch a short simulated ad to earn ₹0.50</p>
-            <button onclick="watchAd()" id="ad-btn" class="bg-amber-600 hover:bg-amber-500 px-6 py-2 rounded-lg font-bold transition">Watch Ad</button>
-            <p id="ad-result" class="mt-3 text-sm text-green-400 font-semibold"></p>
+            <button onclick="watchAd()" id="ad-btn" class="bg-amber-600 hover:bg-amber-500 px-6 py-2 rounded-lg font-bold transition">Watch Ad (₹0.50)</button>
+            <p id="ad-result" class="mt-2 text-sm text-green-400 font-semibold"></p>
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Game Logic -->
     <script>
         let walletBalance = 0.00;
+        let aviatorInterval;
+        let currentMultiplier = 1.00;
+        let isPlayingAviator = false;
+        let betAmount = 0;
 
         function updateWallet(amount) {
             walletBalance += amount;
@@ -84,87 +114,124 @@
         }
 
         function giveWelcomeBonus() {
-            // Random bonus between 3 and 99 rupees
             const randomBonus = Math.floor(Math.random() * (99 - 3 + 1)) + 3;
             updateWallet(randomBonus);
             alert(`🎉 Login Successful! You won a Welcome Bonus of ₹${randomBonus}!`);
-            
-            // Switch screen
             document.getElementById('auth-container').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
         }
 
         function handleGoogleLogin() {
-            setTimeout(() => {
-                giveWelcomeBonus();
-            }, 500);
+            setTimeout(() => { giveWelcomeBonus(); }, 500);
         }
 
         function sendOTP() {
             const mobile = document.getElementById('mobile-input').value;
-            if(mobile.length < 10) {
-                alert('Kripya sahi mobile number darj karein.');
-                return;
-            }
+            if(mobile.length < 10) { alert('Valid mobile number daalein.'); return; }
             document.getElementById('mobile-form').style.display = 'none';
             document.getElementById('otp-section').style.display = 'block';
-            alert('OTP bhej diya gaya hai (Simulation: Koi bhi 6 ank daalein)');
+            alert('OTP bhej diya gaya hai (Koi bhi 6 ank daalein)');
         }
 
         function verifyOTP() {
             const otp = document.getElementById('otp-input').value;
-            if(otp.length === 6) {
-                giveWelcomeBonus();
-            } else {
-                alert('Kripya 6 anko ka valid OTP darj karein.');
-            }
+            if(otp.length === 6) { giveWelcomeBonus(); } else { alert('Valid 6-digit OTP daalein.'); }
         }
 
-        function spinWheel() {
-            if(walletBalance < 10) {
-                alert('Spin karne ke liye kam se kam ₹10 hone chahiye!');
-                return;
+        // Aviator Game Logic (1x to 500x)
+        function startAviator() {
+            betAmount = Number(document.getElementById('aviator-bet').value);
+            if(!betAmount || betAmount <= 0) { alert('Sahi bet amount daalein!'); return; }
+            if(walletBalance < betAmount) { alert('Wallet me itna balance nahi hai!'); return; }
+
+            updateWallet(-betAmount);
+            document.getElementById('aviator-btn').classList.add('hidden');
+            document.getElementById('cashout-btn').classList.remove('hidden');
+            
+            currentMultiplier = 1.00;
+            isPlayingAviator = true;
+            let crashAt = (Math.random() * 10 + 1).toFixed(2); // Random crash between 1x and 500x simulation
+            if(Math.random() > 0.8) crashAt = (Math.random() * 490 + 10).toFixed(2);
+
+            aviatorInterval = setInterval(() => {
+                currentMultiplier += 0.05;
+                document.getElementById('aviator-multiplier').innerText = currentMultiplier.toFixed(2) + 'x';
+
+                if(currentMultiplier >= Number(crashAt)) {
+                    clearInterval(aviatorInterval);
+                    if(isPlayingAviator) {
+                        isPlayingAviator = false;
+                        document.getElementById('aviator-result').innerText = `💥 Flew away at ${crashAt}x! You lost ₹${betAmount}`;
+                        document.getElementById('aviator-result').className = 'mt-2 text-sm font-semibold text-red-500';
+                        document.getElementById('aviator-btn').classList.remove('hidden');
+                        document.getElementById('cashout-btn').classList.add('hidden');
+                    }
+                }
+            }, 100);
+        }
+
+        function cashOut() {
+            if(!isPlayingAviator) return;
+            clearInterval(aviatorInterval);
+            isPlayingAviator = false;
+            
+            let wonAmount = (betAmount * currentMultiplier).toFixed(2);
+            updateWallet(Number(wonAmount));
+            
+            document.getElementById('aviator-result').innerText = `🎉 Cashed out at ${currentMultiplier.toFixed(2)}x! Won ₹${wonAmount}`;
+            document.getElementById('aviator-result').className = 'mt-2 text-sm font-semibold text-green-400';
+            document.getElementById('aviator-btn').classList.remove('hidden');
+            document.getElementById('cashout-btn').classList.add('hidden');
+        }
+
+        // Jackpot & Multiplier Game
+        function playJackpot() {
+            if(walletBalance < 20) { alert('Jackpot ke liye kam se kam ₹20 chahiye!'); return; }
+            updateWallet(-20);
+            
+            const multipliers = [0, 1, 2, 5, 10, 50, 100, 500];
+            const weights = [50, 25, 12, 7, 3, 2, 0.8, 0.2]; // Probability
+            let rand = Math.random() * 100;
+            let sum = 0;
+            let selectedMult = 0;
+
+            for(let i=0; i<multipliers.length; i++) {
+                sum += weights[i];
+                if(rand <= sum) { selectedMult = multipliers[i]; break; }
             }
-            updateWallet(-10); // Deduct spin fee
-            const winnings = [0, 5, 10, 20, 50, 100];
-            const prize = winnings[Math.floor(Math.random() * winnings.length)];
-            updateWallet(prize);
-            document.getElementById('spin-result').innerText = prize > 0 ? `Aapne jeete ₹${prize}! 🎊` : `Oops! Is baar kuch nahi mila.`;
+
+            let win = 20 * selectedMult;
+            if(win > 0) updateWallet(win);
+
+            document.getElementById('jackpot-result').innerText = selectedMult > 0 ? 
+                `🎰 Jackpot Hit! ${selectedMult}x Multiplier! You won ₹${win}` : 
+                `😢 Better luck next time!`;
         }
 
         function watchAd() {
-            const adBtn = document.getElementById('ad-btn');
-            adBtn.disabled = true;
-            adBtn.innerText = 'Ad chal rahi hai... (5s)';
-            
+            const btn = document.getElementById('ad-btn');
+            btn.disabled = true;
+            btn.innerText = 'Ad playing...';
             setTimeout(() => {
                 updateWallet(0.50);
-                document.getElementById('ad-result').innerText = 'Ad dekhne ke liye ₹0.50 mil gaye! ✅';
-                adBtn.disabled = false;
-                adBtn.innerText = 'Watch Ad';
-            }, 5000);
+                document.getElementById('ad-result').innerText = '₹0.50 added successfully! ✅';
+                btn.disabled = false;
+                btn.innerText = 'Watch Ad (₹0.50)';
+            }, 3000);
         }
 
         function openDepositModal() {
-            let amount = prompt("Kitna amount deposit karna hai? (UPI QR Simulation)");
-            if(amount && !isNaN(amount)) {
-                updateWallet(Number(amount));
-                alert(`₹${amount} safalpurvak add ho gaye hain!`);
-            }
+            let amt = prompt("Kitna amount deposit karna hai? (UPI QR Simulation)");
+            if(amt && !isNaN(amt)) { updateWallet(Number(amt)); alert(`₹${amt} added!`); }
         }
 
         function openWithdrawModal() {
-            let amount = prompt("Kitna amount withdraw karna hai? (Minimum ₹100)");
-            amount = Number(amount);
-            if(amount >= 100) {
-                if(walletBalance >= amount) {
-                    updateWallet(-amount);
-                    alert(`₹${amount} ki withdrawal request accept ho gayi hai! Aapke UPI me bhej diye jayenge.`);
-                } else {
-                    alert('Wallet me itna balance nahi hai!');
-                }
-            } else if(amount > 0) {
-                alert('Minimum withdrawal limit ₹100 hai.');
+            let amt = Number(prompt("Withdrawal amount (Min ₹100):"));
+            if(amt >= 100 && walletBalance >= amt) {
+                updateWallet(-amt);
+                alert(`₹${amt} withdrawal request sent successfully!`);
+            } else {
+                alert('Invalid amount or low balance!');
             }
         }
     </script>
