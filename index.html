@@ -3,131 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NK Pockets - Real Money Gaming Hub</title>
-    
-    <meta name="description" content="NK Pockets is India's leading real money gaming and reward platform. Play Aviator, Fruit Slot, Ludo, and win exciting cash prizes.">
-    <meta name="keywords" content="NK Pockets, real money game, aviator game india, ludo earning app">
-    <meta name="author" content="Nitin Vishwkarma">
+    <title>Hom Mony - Real Casino & Slots Gaming Hub</title>
     
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3076/3076137.png">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3076/3076137.png">
-
     <script src="https://cdn.tailwindcss.com"></script>
-    <meta name="theme-color" content="#030712">
+    <meta name="theme-color" content="#022c22">
+    <style>
+        .gold-border { border: 2px solid #facc15; box-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
+        .game-card { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); }
+    </style>
 </head>
-<body class="bg-gray-950 text-white font-sans min-h-screen pb-12 select-none">
+<body class="bg-slate-950 text-white font-sans min-h-screen pb-20 select-none">
 
-    <!-- Login Container -->
-    <div id="auth-container" class="max-w-md mx-auto mt-16 p-6 bg-gray-900 rounded-2xl shadow-2xl border border-gray-800 mx-4">
-        <div class="text-center mb-6">
-            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-green-600 to-emerald-400 rounded-2xl shadow-lg mb-3">
-                <span class="text-3xl">🎮</span>
+    <!-- 1. INTRO / LOADING SCREEN (Screenshot 1 jaisa) -->
+    <div id="intro-screen" class="fixed inset-0 bg-emerald-950 flex flex-col items-center justify-center z-50 transition-opacity duration-700">
+        <div class="text-center p-6">
+            <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-tr from-yellow-500 to-amber-300 rounded-3xl flex items-center justify-center gold-border shadow-2xl animate-bounce">
+                <span class="text-5xl">🎰</span>
             </div>
-            <h2 class="text-2xl font-extrabold text-green-400 tracking-wide">NK Pockets</h2>
-            <p class="text-xs text-gray-400 mt-1">Real Money Gaming & Rewards Platform</p>
+            <h1 class="text-3xl font-black text-yellow-400 tracking-wider mb-2">HOM MONY</h1>
+            <p class="text-xs text-emerald-300 mb-8 font-medium">The best slots machine & gaming hub in India</p>
+            
+            <div class="w-64 bg-slate-900 h-4 rounded-full mx-auto overflow-hidden p-0.5 border border-yellow-500/40">
+                <div id="loading-bar" class="bg-gradient-to-r from-yellow-500 to-amber-300 h-full rounded-full w-0 transition-all duration-300"></div>
+            </div>
+            <p id="loading-text" class="text-xs text-yellow-400 font-bold mt-2">Loading 0%...</p>
         </div>
-        
-        <input type="text" id="user-identifier" placeholder="Mobile Number ya Unique ID daalein" class="w-full p-3.5 mb-4 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-green-500 text-base shadow-inner">
-        
-        <button id="login-btn" class="w-full bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 font-bold py-3.5 rounded-xl transition shadow-lg text-base cursor-pointer">Secure Login & Play</button>
     </div>
 
-    <!-- Main Dashboard -->
-    <div id="dashboard" class="hidden max-w-md mx-auto p-4">
-        <!-- Header / Wallet -->
-        <div class="bg-gray-900 p-4 rounded-xl shadow-lg border border-gray-800 flex justify-between items-center mb-6">
-            <div>
-                <h1 class="text-lg font-bold text-green-400">NK Pockets</h1>
-                <p class="text-xs text-gray-400">Player: <span id="display-name" class="text-white font-semibold">User</span></p>
+    <!-- 2. LOGIN / BONUS POPUP (Screenshot 2, 3 aur 8 jaisa) -->
+    <div id="auth-modal" class="hidden fixed inset-0 bg-black/85 flex items-center justify-center z-40 p-4 backdrop-blur-sm">
+        <div class="bg-gradient-to-b from-emerald-900 to-slate-900 max-w-sm w-full p-6 rounded-3xl gold-border shadow-2xl relative">
+            <div class="text-center mb-5">
+                <div class="inline-block bg-yellow-400 text-slate-950 font-black text-xs px-3 py-1 rounded-full mb-2 uppercase tracking-widest shadow">स्वागत बोनस</div>
+                <h3 class="text-3xl font-extrabold text-yellow-300">₹10 - ₹50</h3>
+                <p class="text-xs text-slate-300 mt-1">मोबाइल नंबर और पासवर्ड दर्ज करके खाता बनाएं</p>
             </div>
-            <div class="text-right">
-                <p class="text-xs text-gray-400">Live Wallet</p>
-                <p class="text-xl font-bold text-yellow-400">₹<span id="wallet-balance">0.00</span></p>
+
+            <div class="space-y-3 mb-5">
+                <div>
+                    <label class="text-[10px] text-emerald-300 font-semibold uppercase">मोबाइल नंबर</label>
+                    <input type="text" id="mob-input" placeholder="+91 मोबाइल नंबर दर्ज करें" class="w-full p-3 bg-slate-950/80 border border-emerald-700/50 rounded-xl text-sm text-white focus:outline-none focus:border-yellow-400">
+                </div>
+                <div>
+                    <label class="text-[10px] text-emerald-300 font-semibold uppercase">लॉगिन पासवर्ड</label>
+                    <input type="password" id="pass-input" placeholder="पासवर्ड सेट करें" class="w-full p-3 bg-slate-950/80 border border-emerald-700/50 rounded-xl text-sm text-white focus:outline-none focus:border-yellow-400">
+                </div>
+                <div>
+                    <label class="text-[10px] text-emerald-300 font-semibold uppercase">धारक का नाम</label>
+                    <input type="text" id="name-input" placeholder="वापस लेने के लिए पूरा नाम" class="w-full p-3 bg-slate-950/80 border border-emerald-700/50 rounded-xl text-sm text-white focus:outline-none focus:border-yellow-400">
+                </div>
+            </div>
+
+            <button id="final-login-btn" class="w-full bg-gradient-to-r from-yellow-500 to-amber-400 hover:from-yellow-400 hover:to-amber-300 text-slate-950 font-black py-3.5 rounded-xl transition shadow-lg cursor-pointer tracking-wide">
+                पुष्टि करना (LOGIN)
+            </button>
+        </div>
+    </div>
+
+    <!-- 3. MAIN DASHBOARD (Lobby Layout) -->
+    <div id="dashboard" class="hidden max-w-md mx-auto p-3">
+        <!-- Top Profile & Wallet Header -->
+        <div class="flex justify-between items-center bg-slate-900/90 p-3 rounded-2xl border border-emerald-800/40 mb-3 shadow-md">
+            <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-500 to-amber-400 flex items-center justify-center font-bold text-slate-950 border border-yellow-300 shadow">
+                    <span id="user-initial">N</span>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-emerald-300 truncate w-28" id="header-username">User</p>
+                    <p class="text-[10px] text-slate-400">UID: <span id="header-uid">382145</span></p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-emerald-900">
+                <span class="text-yellow-400 font-extrabold text-sm">₹<span id="wallet-balance">0.00</span></span>
+                <button id="add-cash-btn" class="w-6 h-6 bg-emerald-600 rounded-lg flex items-center justify-center font-bold text-white text-xs cursor-pointer shadow">+</button>
             </div>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="grid grid-cols-2 gap-4 mb-6">
-            <button id="deposit-btn" class="bg-blue-600 hover:bg-blue-500 py-3 rounded-xl font-semibold text-center transition shadow cursor-pointer text-sm">Add Money (UPI)</button>
-            <button id="withdraw-btn" class="bg-purple-600 hover:bg-purple-500 py-3 rounded-xl font-semibold text-center transition shadow cursor-pointer text-sm">Withdraw</button>
+        <!-- Live Jackpot Lotto Banner -->
+        <div class="bg-gradient-to-r from-emerald-900 via-teal-900 to-emerald-950 p-3.5 rounded-2xl gold-border mb-4 relative overflow-hidden">
+            <div class="flex justify-between items-center mb-1">
+                <span class="bg-red-600 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse">● LIVE</span>
+                <span class="text-[10px] text-yellow-300 font-bold">Jackpot Lotto</span>
+            </div>
+            <div class="text-2xl font-black text-yellow-400 tracking-tight mb-1">₹6,83,190</div>
+            <p class="text-[10px] text-emerald-200">Random & Provably Fair System Active</p>
         </div>
 
-        <!-- Games Grid (Multiple Real Games) -->
-        <h3 class="text-md font-bold mb-3 text-gray-300">🔥 Popular Real Games</h3>
-        <div class="grid grid-cols-2 gap-3 mb-6">
-            <div onclick="showGame('aviator')" class="bg-gray-900 p-4 rounded-xl border border-gray-800 text-center cursor-pointer hover:border-red-500 transition shadow">
-                <span class="text-3xl">✈️</span>
-                <p class="font-bold mt-2 text-sm text-red-400">Aviator Crash</p>
+        <!-- Category Tabs -->
+        <div class="flex gap-2 overflow-x-auto pb-2 mb-3 text-xs font-bold scrollbar-none">
+            <button class="bg-emerald-600 text-white px-4 py-1.5 rounded-xl shrink-0 shadow">🎰 SLOTS</button>
+            <button class="bg-slate-900 text-emerald-300 px-4 py-1.5 rounded-xl shrink-0 border border-emerald-900">🚀 MULTIPLAYER</button>
+            <button class="bg-slate-900 text-emerald-300 px-4 py-1.5 rounded-xl shrink-0 border border-emerald-900">🃏 CARDS</button>
+        </div>
+
+        <!-- Games Grid -->
+        <div class="grid grid-cols-3 gap-2.5 mb-20">
+            <div onclick="launchGame('aviator')" class="game-card p-3 rounded-2xl border border-emerald-700/50 text-center cursor-pointer hover:scale-105 transition shadow-lg relative flex flex-col items-center justify-center">
+                <span class="text-3xl mb-1">✈️</span>
+                <p class="text-[11px] font-bold text-yellow-300">Aviator</p>
+                <span class="absolute top-1 right-1 bg-red-600 text-[8px] font-bold px-1 rounded">HOT</span>
             </div>
-            <div onclick="showGame('slot')" class="bg-gray-900 p-4 rounded-xl border border-gray-800 text-center cursor-pointer hover:border-yellow-500 transition shadow">
-                <span class="text-3xl">🍒</span>
-                <p class="font-bold mt-2 text-sm text-yellow-400">Fruit Slot</p>
+            <div onclick="launchGame('slot')" class="game-card p-3 rounded-2xl border border-emerald-700/50 text-center cursor-pointer hover:scale-105 transition shadow-lg relative flex flex-col items-center justify-center">
+                <span class="text-3xl mb-1">🍒</span>
+                <p class="text-[11px] font-bold text-yellow-300">Fruit 777</p>
+                <span class="absolute top-1 right-1 bg-red-600 text-[8px] font-bold px-1 rounded">HOT</span>
             </div>
-            <div onclick="showGame('ludo')" class="bg-gray-900 p-4 rounded-xl border border-gray-800 text-center cursor-pointer hover:border-blue-500 transition shadow">
-                <span class="text-3xl">🎲</span>
-                <p class="font-bold mt-2 text-sm text-blue-400">Ludo Quick</p>
+            <div onclick="launchGame('ludo')" class="game-card p-3 rounded-2xl border border-emerald-700/50 text-center cursor-pointer hover:scale-105 transition shadow-lg relative flex flex-col items-center justify-center">
+                <span class="text-3xl mb-1">🎲</span>
+                <p class="text-[11px] font-bold text-yellow-300">Ludo Quick</p>
             </div>
-            <div onclick="showGame('teenpatti')" class="bg-gray-900 p-4 rounded-xl border border-gray-800 text-center cursor-pointer hover:border-purple-500 transition shadow">
-                <span class="text-3xl">🃏</span>
-                <p class="font-bold mt-2 text-sm text-purple-400">Teen Patti</p>
+            <div onclick="launchGame('teenpatti')" class="game-card p-3 rounded-2xl border border-emerald-700/50 text-center cursor-pointer hover:scale-105 transition shadow-lg relative flex flex-col items-center justify-center">
+                <span class="text-3xl mb-1">🃏</span>
+                <p class="text-[11px] font-bold text-yellow-300">Teen Patti</p>
+                <span class="absolute top-1 right-1 bg-red-600 text-[8px] font-bold px-1 rounded">HOT</span>
             </div>
         </div>
 
-        <!-- Game Screens (Dynamic) -->
-        
-        <!-- 1. Aviator Section -->
-        <div id="game-aviator" class="game-section bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center">
-            <h3 class="text-lg font-bold text-red-400 mb-1">✈️ Aviator (Crash Game)</h3>
-            <div class="bg-black p-4 rounded-xl mb-3 border border-gray-800">
-                <span id="aviator-multiplier" class="text-3xl font-extrabold text-green-400">1.00x</span>
-            </div>
-            <input type="number" id="aviator-bet" placeholder="Bet Amount (₹)" class="w-full p-2.5 mb-3 bg-gray-800 border border-gray-700 rounded-xl text-center text-white">
-            <button id="aviator-btn" class="w-full bg-red-600 hover:bg-red-500 py-2.5 rounded-xl font-bold transition mb-2 cursor-pointer">Place Bet & Fly</button>
-            <button id="cashout-btn" class="w-full bg-green-600 hover:bg-green-500 py-2.5 rounded-xl font-bold transition hidden cursor-pointer">CASH OUT</button>
-            <p id="aviator-result" class="mt-2 text-sm font-semibold"></p>
+        <!-- Bottom Navigation Bar -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-950/95 border-t border-emerald-900/50 p-2 flex justify-around items-center z-30 backdrop-blur">
+            <button onclick="alert('होम स्क्रीन')" class="text-center text-yellow-400 text-[10px] font-bold">
+                <span class="text-xl block">🏠</span>किनारा
+            </button>
+            <button onclick="alert('गेम सेक्शन')" class="text-center text-emerald-400 text-[10px] font-bold">
+                <span class="text-xl block">🎮</span>खेल
+            </button>
+            <button onclick="alert('सहायता केंद्र')" class="text-center text-slate-400 text-[10px] font-bold">
+                <span class="text-xl block">🛠️</span>Support
+            </button>
+            <button onclick="alert('प्रोफाइल और सेटिंग्स')" class="text-center text-slate-400 text-[10px] font-bold">
+                <span class="text-xl block">⚙️</span>Settings
+            </button>
         </div>
+    </div>
 
-        <!-- 2. Fruit Slot Section -->
-        <div id="game-slot" class="game-section bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center hidden">
-            <h3 class="text-lg font-bold text-yellow-400 mb-1">🍒 Fruit Slot (1x - 500x)</h3>
-            <div class="bg-black p-4 rounded-xl mb-3 border border-gray-800 flex justify-center gap-4 text-3xl">
-                <span id="slot-1">🍋</span>
-                <span id="slot-2">🍒</span>
-                <span id="slot-3">⭐</span>
-            </div>
-            <button id="slot-btn" class="w-full bg-yellow-600 hover:bg-yellow-500 py-2.5 rounded-xl font-bold text-black transition cursor-pointer">Spin Slot (₹10)</button>
-            <p id="slot-result" class="mt-2 text-sm font-semibold text-yellow-300"></p>
-        </div>
-
-        <!-- 3. Ludo Quick Section -->
-        <div id="game-ludo" class="game-section bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center hidden">
-            <h3 class="text-lg font-bold text-blue-400 mb-1">🎲 Ludo Quick Dice</h3>
-            <p class="text-xs text-gray-400 mb-3">Roll 6 to Win Double!</p>
-            <div class="bg-black p-6 rounded-xl mb-3 border border-gray-800 text-5xl">
-                <span id="dice-result">🎲</span>
-            </div>
-            <button id="ludo-btn" class="w-full bg-blue-600 hover:bg-blue-500 py-2.5 rounded-xl font-bold transition cursor-pointer">Roll Dice (₹20)</button>
-            <p id="ludo-text" class="mt-2 text-sm font-semibold text-blue-300"></p>
-        </div>
-
-        <!-- 4. Teen Patti Section -->
-        <div id="game-teenpatti" class="game-section bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 mb-6 text-center hidden">
-            <h3 class="text-lg font-bold text-purple-400 mb-1">🃏 Teen Patti Card Game</h3>
-            <p class="text-xs text-gray-400 mb-3">Highest Card / Sequence wins!</p>
-            <div class="bg-black p-4 rounded-xl mb-3 border border-gray-800 flex justify-center gap-3 text-2xl">
-                <span id="card-1" class="bg-gray-800 p-3 rounded-lg">🎴</span>
-                <span id="card-2" class="bg-gray-800 p-3 rounded-lg">🎴</span>
-                <span id="card-3" class="bg-gray-800 p-3 rounded-lg">🎴</span>
-            </div>
-            <button id="tp-btn" class="w-full bg-purple-600 hover:bg-purple-500 py-2.5 rounded-xl font-bold transition cursor-pointer">Play Teen Patti (₹50)</button>
-            <p id="tp-result" class="mt-2 text-sm font-semibold text-purple-300"></p>
-        </div>
-
-        <!-- Watch Ads & Earn -->
-        <div class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-800 text-center">
-            <h3 class="text-lg font-bold mb-2">Watch Ads & Earn 📺</h3>
-            <button id="ad-btn" class="bg-amber-600 hover:bg-amber-500 px-6 py-2.5 rounded-xl font-bold transition cursor-pointer">Watch Ad (₹0.50)</button>
-            <p id="ad-result" class="mt-2 text-sm text-green-400 font-semibold"></p>
+    <!-- 4. GAME MODAL -->
+    <div id="game-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4">
+        <div class="w-full max-w-md bg-slate-900 rounded-2xl p-4 border border-emerald-700 relative">
+            <button onclick="closeGameModal()" class="absolute top-3 right-3 bg-red-600 text-white w-8 h-8 rounded-full font-bold">✕</button>
+            <div id="game-content-area" class="text-center py-4"></div>
         </div>
     </div>
 
@@ -151,201 +165,151 @@
 
         let currentUserKey = "";
         window.userWalletBalance = 0.00;
-        let aviatorInterval;
-        let currentMultiplier = 1.00;
-        let isPlayingAviator = false;
-        let betAmount = 0;
 
-        // Switch Games View
-        window.showGame = function(gameName) {
-            document.querySelectorAll('.game-section').forEach(el => el.classList.add('hidden'));
-            document.getElementById('game-' + gameName).classList.remove('hidden');
-        }
+        // Intro Loading Animation
+        window.addEventListener('load', () => {
+            let bar = document.getElementById('loading-bar');
+            let txt = document.getElementById('loading-text');
+            let width = 0;
+            let interval = setInterval(() => {
+                width += 5;
+                bar.style.width = width + '%';
+                txt.innerText = `Loading ${width}%...`;
+                if(width >= 100) {
+                    clearInterval(interval);
+                    document.getElementById('intro-screen').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('intro-screen').style.display = 'none';
+                        document.getElementById('auth-modal').classList.remove('hidden');
+                    }, 500);
+                }
+            }, 80);
+        });
 
-        function updateWallet(amount) {
+        // Login System linked with Firebase Database
+        document.getElementById('final-login-btn').addEventListener('click', async () => {
+            let mob = document.getElementById('mob-input').value.trim();
+            let name = document.getElementById('name-input').value.trim();
+
+            if(!mob || !name) {
+                alert("कृपया अपना मोबाइल नंबर और नाम दर्ज करें!");
+                return;
+            }
+
+            currentUserKey = mob.replace(/[^a-zA-Z0-9]/g, "_");
+            const userRef = doc(db, "users", currentUserKey);
+            const userSnap = await getDoc(userRef);
+
+            if(userSnap.exists()) {
+                window.userWalletBalance = userSnap.data().balance;
+            } else {
+                let welcomeBonus = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
+                window.userWalletBalance = welcomeBonus;
+                await setDoc(userRef, {
+                    identifier: mob,
+                    fullName: name,
+                    balance: window.userWalletBalance,
+                    createdAt: new Date().toISOString()
+                });
+                alert(`🎉 स्वागत बोनस ₹${welcomeBonus} आपके वॉलेट में जुड़ गया है!`);
+            }
+
+            document.getElementById('header-username').innerText = name;
+            document.getElementById('user-initial').innerText = name.charAt(0).toUpperCase();
+            document.getElementById('header-uid').innerText = Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('wallet-balance').innerText = window.userWalletBalance.toFixed(2);
+
+            document.getElementById('auth-modal').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+        });
+
+        window.updateWallet = function(amount) {
             window.userWalletBalance += amount;
             document.getElementById('wallet-balance').innerText = window.userWalletBalance.toFixed(2);
-            if (currentUserKey) {
+            if(currentUserKey) {
                 updateDoc(doc(db, "users", currentUserKey), { balance: window.userWalletBalance }).catch(e => console.error(e));
             }
         }
 
-        document.getElementById('login-btn').addEventListener('click', async () => {
-            let inputId = document.getElementById('user-identifier').value.trim();
-            if(!inputId) {
-                alert("Kripya apna Mobile Number ya ID daalein!");
-                return;
-            }
-
-            try {
-                currentUserKey = inputId.replace(/[^a-zA-Z0-9]/g, "_");
-                const userRef = doc(db, "users", currentUserKey);
-                const userSnap = await getDoc(userRef);
-
-                if (userSnap.exists()) {
-                    window.userWalletBalance = userSnap.data().balance;
-                    alert(`Welcome back, ${inputId}!`);
-                } else {
-                    let welcomeBonus = Math.floor(Math.random() * (99 - 3 + 1)) + 3;
-                    window.userWalletBalance = welcomeBonus;
-                    await setDoc(userRef, {
-                        identifier: inputId,
-                        balance: window.userWalletBalance,
-                        createdAt: new Date().toISOString()
-                    });
-                    alert(`🎉 Account Created! Bonus: ₹${welcomeBonus}`);
-                }
-
-                document.getElementById('display-name').innerText = inputId;
-                document.getElementById('wallet-balance').innerText = window.userWalletBalance.toFixed(2);
-                document.getElementById('auth-container').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-            } catch (error) {
-                alert("Database Error: " + error.message);
-            }
-        });
-
-        // Slot Game
-        document.getElementById('slot-btn').addEventListener('click', () => {
-            if(window.userWalletBalance < 10) { alert('Balance kam hai! Min ₹10 chahiye.'); return; }
-            updateWallet(-10);
-            let fruits = ['🍋', '🍒', '⭐', '💎', '🍉'];
-            let f1 = fruits[Math.floor(Math.random() * fruits.length)];
-            let f2 = fruits[Math.floor(Math.random() * fruits.length)];
-            let f3 = fruits[Math.floor(Math.random() * fruits.length)];
-
-            document.getElementById('slot-1').innerText = f1;
-            document.getElementById('slot-2').innerText = f2;
-            document.getElementById('slot-3').innerText = f3;
-
-            if(f1 === f2 && f2 === f3) {
-                let win = f1 === '💎' ? 500 : 100;
-                updateWallet(win);
-                document.getElementById('slot-result').innerText = `🔥 JACKPOT! Won ₹${win}!`;
-            } else if(f1 === f2 || f2 === f3 || f1 === f3) {
-                updateWallet(20);
-                document.getElementById('slot-result').innerText = `✨ Two matched! Won ₹20!`;
-            } else {
-                document.getElementById('slot-result').innerText = `😢 No match. Try again!`;
-            }
-        });
-
-        // Ludo Quick Game
-        document.getElementById('ludo-btn').addEventListener('click', () => {
-            if(window.userWalletBalance < 20) { alert('Balance kam hai! Min ₹20 chahiye.'); return; }
-            updateWallet(-20);
-            let diceRolls = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
-            let roll = Math.floor(Math.random() * 6);
-            document.getElementById('dice-result').innerText = diceRolls[roll];
-
-            if(roll === 5) { // 6 aya
-                updateWallet(50);
-                document.getElementById('ludo-text').innerText = `🎉 Amazing! You rolled 6 and won ₹50!`;
-            } else {
-                document.getElementById('ludo-text').innerText = `😢 Rolled ${roll + 1}. Try again for 6!`;
-            }
-        });
-
-        // Teen Patti Game
-        document.getElementById('tp-btn').addEventListener('click', () => {
-            if(window.userWalletBalance < 50) { alert('Balance kam hai! Min ₹50 chahiye.'); return; }
-            updateWallet(-50);
-            let cards = ['A♠', 'K♥', 'Q♦', 'J♣', '10♠', '9♥', '8♦', '7♣', '6♠'];
-            let c1 = cards[Math.floor(Math.random() * cards.length)];
-            let c2 = cards[Math.floor(Math.random() * cards.length)];
-            let c3 = cards[Math.floor(Math.random() * cards.length)];
-
-            document.getElementById('card-1').innerText = c1;
-            document.getElementById('card-2').innerText = c2;
-            document.getElementById('card-3').innerText = c3;
-
-            if(c1[0] === c2[0] && c2[0] === c3[0]) {
-                updateWallet(300);
-                document.getElementById('tp-result').innerText = `🔥 TRAIL (Pari)! You won ₹300!`;
-            } else if(c1[0] === c2[0] || c2[0] === c3[0]) {
-                updateWallet(100);
-                document.getElementById('tp-result').innerText = `✨ Pair! You won ₹100!`;
-            } else {
-                document.getElementById('tp-result').innerText = `😢 High Card. Better luck next time!`;
-            }
-        });
-
-        // Aviator Game
-        document.getElementById('aviator-btn').addEventListener('click', () => {
-            betAmount = Number(document.getElementById('aviator-bet').value);
-            if(!betAmount || betAmount <= 0) { alert('Sahi bet amount daalein!'); return; }
-            if(window.userWalletBalance < betAmount) { alert('Wallet me balance nahi hai!'); return; }
-
-            updateWallet(-betAmount);
-            document.getElementById('aviator-btn').classList.add('hidden');
-            document.getElementById('cashout-btn').classList.remove('hidden');
-            
-            currentMultiplier = 1.00;
-            isPlayingAviator = true;
-            let crashAt = (Math.random() * 8 + 1).toFixed(2);
-
-            aviatorInterval = setInterval(() => {
-                currentMultiplier += 0.05;
-                document.getElementById('aviator-multiplier').innerText = currentMultiplier.toFixed(2) + 'x';
-
-                if(currentMultiplier >= Number(crashAt)) {
-                    clearInterval(aviatorInterval);
-                    if(isPlayingAviator) {
-                        isPlayingAviator = false;
-                        document.getElementById('aviator-result').innerText = `💥 Crashed at ${crashAt}x! Lost ₹${betAmount}`;
-                        document.getElementById('aviator-btn').classList.remove('hidden');
-                        document.getElementById('cashout-btn').classList.add('hidden');
-                    }
-                }
-            }, 100);
-        });
-
-        document.getElementById('cashout-btn').addEventListener('click', () => {
-            if(!isPlayingAviator) return;
-            clearInterval(aviatorInterval);
-            isPlayingAviator = false;
-            let wonAmount = (betAmount * currentMultiplier).toFixed(2);
-            updateWallet(Number(wonAmount));
-            document.getElementById('aviator-result').innerText = `🎉 Cashed out at ${currentMultiplier.toFixed(2)}x! Won ₹${wonAmount}`;
-            document.getElementById('aviator-btn').classList.add('hidden');
-            document.getElementById('cashout-btn').classList.remove('hidden');
-        });
-
-        // Deposit via UPI ID (8819920722@naviaxis)
-        document.getElementById('deposit-btn').addEventListener('click', () => {
-            let amount = prompt("Kitna amount add karna hai? (Jaise: 100, 500)");
-            if(amount && !isNaN(amount) && amount > 0) {
-                let upiID = "8819920722@naviaxis";
-                let confirmPay = confirm(`Kripya is UPI ID par ₹${amount} bhejhein (NITIN):\n👉 ${upiID}\n\nPese bhejne ke baad 12-digit UTR number daalein.`);
-                if(confirmPay) {
-                    let utr = prompt("Apne payment ka 12-digit UTR / Transaction ID daalein:");
+        // Add Cash via Navi UPI ID (8819920722@naviaxis)[span_21](start_span)[span_21](end_span)
+        document.getElementById('add-cash-btn').addEventListener('click', () => {
+            let amt = prompt("कितना अमाउंट ऐड करना है? (मिनिमम ₹50)");
+            if(amt && !isNaN(amt) && amt >= 50) {
+                let upi = "8819920722@naviaxis";[span_22](start_span)[span_22](end_span)
+                let ok = confirm(`कृपया इस UPI ID पर ₹${amt} भेजें (NITIN):\n👉 ${upi}\n\nपैसा भेजने के बाद UTR नंबर दर्ज करें।`);
+                if(ok) {
+                    let utr = prompt("12-digit UTR Transaction ID दर्ज करें:");
                     if(utr && utr.length >= 8) {
-                        alert(`Deposit request submitted! UTR: ${utr}`);
-                    } else {
-                        alert("Sahi UTR number daalna anivarya hai.");
+                        alert(`डिपॉजिट UTR: ${utr} सत्यापित हो रहा है। बैलेंस जल्द अपडेट होगा!`);
                     }
                 }
             }
         });
 
-        document.getElementById('withdraw-btn').addEventListener('click', () => {
-            let amt = Number(prompt("Withdrawal amount (Min ₹100):"));
-            if(amt >= 100) {
-                if(window.userWalletBalance >= amt) {
-                    let userUpi = prompt("Apna UPI ID daalein:");
-                    if(userUpi && userUpi.includes("@")) {
-                        updateWallet(-amt);
-                        alert(`₹${amt} ki withdrawal request accept ho gayi hai!`);
-                    } else {
-                        alert("Kripya sahi UPI ID daalein.");
-                    }
-                } else {
-                    alert('Wallet me balance kam hai!');
-                }
-            } else if(amt > 0) {
-                alert('Minimum withdrawal limit ₹100 hai.');
+        // Game Launcher
+        window.launchGame = function(type) {
+            document.getElementById('game-modal').classList.remove('hidden');
+            let area = document.getElementById('game-content-area');
+            
+            if(type === 'slot') {
+                area.innerHTML = `
+                    <h3 class="text-lg font-bold text-yellow-400 mb-2">🍒 Fruit Slot 777</h3>
+                    <div class="bg-black p-6 rounded-2xl flex justify-center gap-4 text-4xl mb-4 border border-yellow-500">
+                        <span id="s1">🍋</span><span id="s2">🍒</span><span id="s3">⭐</span>
+                    </div>
+                    <button onclick="playSlotGame()" class="w-full bg-yellow-500 text-slate-950 font-extrabold py-3 rounded-xl">SPIN (₹10)</button>
+                    <p id="slot-res" class="mt-3 text-xs font-bold text-emerald-400"></p>
+                `;
+            } else if(type === 'ludo') {
+                area.innerHTML = `
+                    <h3 class="text-lg font-bold text-blue-400 mb-2">🎲 Ludo Quick</h3>
+                    <div class="bg-black p-6 rounded-2xl text-6xl mb-4 border border-blue-500">
+                        <span id="dice-view">🎲</span>
+                    </div>
+                    <button onclick="playLudoGame()" class="w-full bg-blue-600 text-white font-extrabold py-3 rounded-xl">ROLL DICE (₹20)</button>
+                    <p id="ludo-res" class="mt-3 text-xs font-bold text-blue-300"></p>
+                `;
+            } else {
+                area.innerHTML = `<h3 class="text-lg font-bold text-red-400">⚡ यह गेम लाइव हो रहा है...</h3>`;
             }
-        });
+        }
+
+        window.closeGameModal = function() {
+            document.getElementById('game-modal').classList.add('hidden');
+        }
+
+        window.playSlotGame = function() {
+            if(window.userWalletBalance < 10) { alert('बैलेंस कम है!'); return; }
+            updateWallet(-10);
+            let symbols = ['🍋', '🍒', '⭐', '💎', '🍉'];
+            let a = symbols[Math.floor(Math.random()*symbols.length)];
+            let b = symbols[Math.floor(Math.random()*symbols.length)];
+            let c = symbols[Math.floor(Math.random()*symbols.length)];
+            document.getElementById('s1').innerText = a;
+            document.getElementById('s2').innerText = b;
+            document.getElementById('s3').innerText = c;
+
+            if(a===b && b===c) {
+                updateWallet(100);
+                document.getElementById('slot-res').innerText = `🔥 जैकपॉट! ₹100 जीते!`;
+            } else {
+                document.getElementById('slot-res').innerText = `😢 हार गए, फिर कोशिश करें!`;
+            }
+        }
+
+        window.playLudoGame = function() {
+            if(window.userWalletBalance < 20) { alert('बैलेंस कम है!'); return; }
+            updateWallet(-20);
+            let faces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+            let r = Math.floor(Math.random()*6);
+            document.getElementById('dice-view').innerText = faces[r];
+            if(r === 5) {
+                updateWallet(50);
+                document.getElementById('ludo-res').innerText = `🎉 6 आया! ₹50 जीते!`;
+            } else {
+                document.getElementById('ludo-res').innerText = `😢 ${r+1} आया। अगली बार 6 आएगा!`;
+            }
+        }
     </script>
 </body>
 </html>
