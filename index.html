@@ -108,7 +108,7 @@
         <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-950/95 border-t border-emerald-900/50 p-2 flex justify-around items-center z-30">
             <button onclick="alert('होम स्क्रीन')" class="text-center text-yellow-400 text-[10px] font-bold cursor-pointer"><span class="text-xl block">🏠</span>किनारा</button>
             <button onclick="alert('गेम ग्रिड एक्टिव है')" class="text-center text-emerald-400 text-[10px] font-bold cursor-pointer"><span class="text-xl block">🎮</span>खेल</button>
-            <button onclick="alert('सपोर्ट के लिए UPI: 8819920722@naviaxis पर संपर्क करें[span_0](start_span)[span_0](end_span)')" class="text-center text-slate-400 text-[10px] font-bold cursor-pointer"><span class="text-xl block">🛠️</span>Support</button>
+            <button onclick="alert('सपोर्ट के लिए UPI: 8819920722@naviaxis पर संपर्क करें')" class="text-center text-slate-400 text-[10px] font-bold cursor-pointer"><span class="text-xl block">🛠️</span>Support</button>
             <button onclick="alert('Hom Mony Verified Account ✅')" class="text-center text-slate-400 text-[10px] font-bold cursor-pointer"><span class="text-xl block">⚙️</span>Settings</button>
         </div>
     </div>
@@ -187,11 +187,10 @@
             }
         }
 
-        // Navi UPI Deposit: 8819920722@naviaxis[span_1](start_span)[span_1](end_span)
         document.getElementById('add-cash-btn').addEventListener('click', () => {
             let amt = prompt("कितना अमाउंट ऐड करना है? (मिनिमम ₹50)");
             if(amt && !isNaN(amt) && amt >= 50) {
-                let upi = "8819920722@naviaxis";[span_2](start_span)[span_2](end_span)
+                let upi = "8819920722@naviaxis";
                 let ok = confirm(`कृपया इस UPI ID पर ₹${amt} भेजें (NITIN):\n👉 ${upi}\n\nपैसा भेजने के बाद 12-digit UTR नंबर दर्ज करें।`);
                 if(ok) {
                     let utr = prompt("12-digit UTR Transaction ID दर्ज करें:");
@@ -243,7 +242,7 @@
         }
 
         window.closeGameModal = function() {
-            document.getElementById('game-modal'].classList.add('hidden');
+            document.getElementById('game-modal').classList.add('hidden');
         }
 
         window.playSlotGame = function() {
@@ -300,3 +299,46 @@
     </script>
 </body>
 </html>
+<!-- Lucky Wheel Game Component -->
+<div class="bg-gradient-to-b from-slate-900 to-emerald-950 p-4 rounded-3xl border border-yellow-500/50 text-center shadow-2xl my-4">
+    <h3 class="text-xl font-black text-yellow-400 mb-2">🎡 Lucky Wheel Spin</h3>
+    <p class="text-xs text-slate-300 mb-4">Spin karein aur jeetein massive coins!</p>
+    
+    <div class="relative w-48 h-48 mx-auto mb-4 flex items-center justify-center bg-slate-950 rounded-full border-4 border-yellow-400 shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+        <div id="wheel-spinner" class="w-full h-full rounded-full flex items-center justify-center text-3xl transition-transform duration-3000 ease-out">
+            🎯
+        </div>
+        <div class="absolute top-0 w-2 h-6 bg-red-500 rounded-b"></div>
+    </div>
+
+    <button onclick="spinTheWheel()" class="w-full bg-gradient-to-r from-yellow-500 to-amber-400 text-slate-950 font-black py-3 rounded-xl shadow-lg cursor-pointer">
+        SPIN NOW (₹20)
+    </button>
+    <p id="wheel-res" class="mt-3 text-sm font-bold text-yellow-300"></p>
+</div>
+
+<script>
+    window.spinTheWheel = function() {
+        if(window.userWalletBalance < 20) {
+            alert('Wallet mein balance kam hai! Pehle Cash Add karein.');
+            return;
+        }
+        updateWallet(-20);
+        
+        let wheel = document.getElementById('wheel-spinner');
+        let randomDeg = Math.floor(Math.random() * 3600) + 720; // Multiple rotations
+        wheel.style.transform = `rotate(${randomDeg}deg)`;
+
+        setTimeout(() => {
+            let rewards = [50, 100, 0, 200, 20, 500];
+            let won = rewards[Math.floor(Math.random() * rewards.length)];
+            
+            if(won > 0) {
+                updateWallet(won);
+                document.getElementById('wheel-res').innerText = `🎉 Badhai ho! Aapne ₹${won} jeet liye hain!`;
+            } else {
+                document.getElementById('wheel-res').innerText = `😢 Is baar kuch nahi mila, dobara try karein!`;
+            }
+        }, 3000);
+    }
+</script>
