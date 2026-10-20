@@ -15,7 +15,7 @@
 </head>
 <body class="bg-slate-950 text-white font-sans min-h-screen pb-20 select-none">
 
-    <!-- 1. INTRO / LOADING SCREEN (Screenshot 1 jaisa) -->
+    <!-- 1. INTRO / LOADING SCREEN -->
     <div id="intro-screen" class="fixed inset-0 bg-emerald-950 flex flex-col items-center justify-center z-50 transition-opacity duration-700">
         <div class="text-center p-6">
             <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-tr from-yellow-500 to-amber-300 rounded-3xl flex items-center justify-center gold-border shadow-2xl animate-bounce">
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <!-- 2. LOGIN / BONUS POPUP (Screenshot 2, 3 aur 8 jaisa) -->
+    <!-- 2. LOGIN / WELCOME BONUS POPUP -->
     <div id="auth-modal" class="hidden fixed inset-0 bg-black/85 flex items-center justify-center z-40 p-4 backdrop-blur-sm">
         <div class="bg-gradient-to-b from-emerald-900 to-slate-900 max-w-sm w-full p-6 rounded-3xl gold-border shadow-2xl relative">
             <div class="text-center mb-5">
@@ -231,11 +231,11 @@
             }
         }
 
-        // Add Cash via Navi UPI ID (8819920722@naviaxis)[span_21](start_span)[span_21](end_span)
+        // Add Cash via Navi UPI ID (8819920722@naviaxis)[span_18](start_span)[span_18](end_span)
         document.getElementById('add-cash-btn').addEventListener('click', () => {
             let amt = prompt("कितना अमाउंट ऐड करना है? (मिनिमम ₹50)");
             if(amt && !isNaN(amt) && amt >= 50) {
-                let upi = "8819920722@naviaxis";[span_22](start_span)[span_22](end_span)
+                let upi = "8819920722@naviaxis"; //[span_19](start_span)[span_19](end_span)
                 let ok = confirm(`कृपया इस UPI ID पर ₹${amt} भेजें (NITIN):\n👉 ${upi}\n\nपैसा भेजने के बाद UTR नंबर दर्ज करें।`);
                 if(ok) {
                     let utr = prompt("12-digit UTR Transaction ID दर्ज करें:");
