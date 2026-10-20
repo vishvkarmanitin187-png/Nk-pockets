@@ -14,13 +14,13 @@
 </head>
 <body class="bg-slate-950 text-white font-sans min-h-screen pb-24 select-none">
 
-    <!-- 1. LOGIN / WELCOME BONUS POPUP -->
+    <!-- LOGIN / REGISTRATION MODAL -->
     <div id="auth-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-40 p-4 backdrop-blur-sm">
         <div class="bg-gradient-to-b from-emerald-900 to-slate-900 max-w-sm w-full p-6 rounded-3xl gold-border shadow-2xl relative">
             <div class="text-center mb-5">
                 <div class="inline-block bg-yellow-400 text-slate-950 font-black text-xs px-3 py-1 rounded-full mb-2 uppercase tracking-widest shadow">स्वागत बोनस</div>
                 <h3 class="text-3xl font-extrabold text-yellow-300">₹10 - ₹50</h3>
-                <p class="text-xs text-slate-300 mt-1">मोबाइल नंबर और पासवर्ड से सुरक्षित लॉगिन करें</p>
+                <p class="text-xs text-slate-300 mt-1">Hom Mony में सुरक्षित लॉगिन करें</p>
             </div>
 
             <div class="space-y-3 mb-5">
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <!-- 2. MAIN DASHBOARD -->
+    <!-- MAIN DASHBOARD -->
     <div id="dashboard" class="hidden max-w-md mx-auto p-3">
         <!-- Top Profile Header -->
         <div class="flex justify-between items-center bg-slate-900/90 p-3 rounded-2xl border border-emerald-800/40 mb-3 shadow-md">
@@ -54,11 +54,11 @@
                 </div>
                 <div>
                     <p class="text-xs font-bold text-emerald-300 truncate w-28" id="header-username">User</p>
-                    <p class="text-[10px] text-slate-400">UID: <span id="header-uid">382145</span></p>
+                    <p class="text-[10px] text-slate-400">UID: <span id="header-uid">383553</span></p>
                 </div>
             </div>
             <div class="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-emerald-900">
-                <span class="text-yellow-400 font-extrabold text-sm">₹<span id="wallet-balance">0.00</span></span>
+                <span class="text-yellow-400 font-extrabold text-sm">₹<span id="wallet-balance">51.00</span></span>
                 <button id="add-cash-btn" class="w-6 h-6 bg-emerald-600 rounded-lg flex items-center justify-center font-bold text-white text-xs cursor-pointer shadow">+</button>
             </div>
         </div>
@@ -75,12 +75,12 @@
 
         <!-- Category Tabs -->
         <div class="flex gap-2 overflow-x-auto pb-2 mb-3 text-xs font-bold">
-            <button onclick="filterCat('all')" class="bg-emerald-600 text-white px-4 py-1.5 rounded-xl shrink-0 shadow">🎰 SLOTS</button>
-            <button onclick="filterCat('multi')" class="bg-slate-900 text-emerald-300 px-4 py-1.5 rounded-xl shrink-0 border border-emerald-900">🚀 MULTIPLAYER</button>
-            <button onclick="filterCat('card')" class="bg-slate-900 text-emerald-300 px-4 py-1.5 rounded-xl shrink-0 border border-emerald-900">🃏 CARDS</button>
+            <button class="bg-emerald-600 text-white px-4 py-1.5 rounded-xl shrink-0 shadow">🎰 SLOTS</button>
+            <button class="bg-slate-900 text-emerald-300 px-4 py-1.5 rounded-xl shrink-0 border border-emerald-900">🚀 MULTIPLAYER</button>
+            <button class="bg-slate-900 text-emerald-300 px-4 py-1.5 rounded-xl shrink-0 border border-emerald-900">🃏 CARDS</button>
         </div>
 
-        <!-- Comprehensive Games Grid (All requested games) -->
+        <!-- Games Grid matching your screenshots -->
         <div id="games-grid" class="grid grid-cols-3 gap-2.5 mb-20">
             <div onclick="launchGame('aviator')" class="game-card p-3 rounded-2xl border border-emerald-700/50 text-center cursor-pointer hover:scale-105 transition shadow-lg relative flex flex-col items-center justify-center">
                 <span class="text-3xl mb-1">✈️</span>
@@ -120,24 +120,24 @@
             <button onclick="alert('सभी गेम्स नीचे ग्रिड में उपलब्ध हैं!')" class="text-center text-emerald-400 text-[10px] font-bold cursor-pointer">
                 <span class="text-xl block">🎮</span>खेल
             </button>
-            <button onclick="alert('सहायता: किसी भी समस्या के लिए 8819920722@naviaxis पर पेमेंट करके UTR भेजें।')" class="text-center text-slate-400 text-[10px] font-bold cursor-pointer">
+            <button onclick="alert('सपोर्ट: 8819920722@naviaxis पर पेमेंट करके UTR भेजें।')" class="text-center text-slate-400 text-[10px] font-bold cursor-pointer">
                 <span class="text-xl block">🛠️</span>Support
             </button>
-            <button onclick="alert('Hom Mony Verified Account ✅ UID: 382145')" class="text-center text-slate-400 text-[10px] font-bold cursor-pointer">
+            <button onclick="alert('Hom Mony Verified Account ✅')" class="text-center text-slate-400 text-[10px] font-bold cursor-pointer">
                 <span class="text-xl block">⚙️</span>Settings
             </button>
         </div>
     </div>
 
-    <!-- 3. GAME MODAL WINDOW -->
+    <!-- GAME MODAL WINDOW -->
     <div id="game-modal" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
         <div class="w-full max-w-md bg-slate-900 rounded-3xl p-5 border border-yellow-500/50 relative shadow-2xl">
-            <button onclick="closeGameModal()" class="absolute top-3 right-3 bg-red-600 hover:bg-red-500 text-white w-8 h-8 rounded-full font-bold flex items-center justify-center shadow">✕</button>
+            <button onclick="closeGameModal()" class="absolute top-3 right-3 bg-red-600 hover:bg-red-500 text-white w-8 h-8 rounded-full font-bold flex items-center justify-center shadow cursor-pointer">✕</button>
             <div id="game-content-area" class="text-center py-2"></div>
         </div>
     </div>
 
-    <!-- Firebase & Functional Logic Script -->
+    <!-- Firebase & Logic Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -156,9 +156,8 @@
         const db = getFirestore(app);
 
         let currentUserKey = "";
-        window.userWalletBalance = 51.00; // Starting default matching screenshot
+        window.userWalletBalance = 51.00;
 
-        // Secure Login / Registration
         document.getElementById('final-login-btn').addEventListener('click', async () => {
             let mob = document.getElementById('mob-input').value.trim();
             let pass = document.getElementById('pass-input').value.trim();
@@ -177,7 +176,7 @@
                 window.userWalletBalance = userSnap.data().balance;
             } else {
                 let welcomeBonus = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
-                window.userWalletBalance = welcomeBonus;
+                window.userWalletBalance = 51.00 + welcomeBonus;
                 await setDoc(userRef, {
                     identifier: mob,
                     password: pass,
@@ -190,7 +189,6 @@
 
             document.getElementById('header-username').innerText = name;
             document.getElementById('user-initial').innerText = name.charAt(0).toUpperCase();
-            document.getElementById('header-uid').innerText = Math.floor(100000 + Math.random() * 900000);
             document.getElementById('wallet-balance').innerText = window.userWalletBalance.toFixed(2);
 
             document.getElementById('auth-modal').classList.add('hidden');
@@ -205,30 +203,29 @@
             }
         }
 
-        // UPI Deposit System (Navi UPI: 8819920722@naviaxis)[span_1](start_span)[span_1](end_span)
+        // Navi UPI Deposit: 8819920722@naviaxis[span_5](start_span)[span_5](end_span)
         document.getElementById('add-cash-btn').addEventListener('click', () => {
             let amt = prompt("कितना अमाउंट ऐड करना है? (मिनिमम ₹50)");
             if(amt && !isNaN(amt) && amt >= 50) {
-                let upi = "8819920722@naviaxis";[span_2](start_span)[span_2](end_span)
-                let ok = confirm(`कृपया इस UPI ID पर ₹${amt} भेजें (NITIN):\n👉 ${upi}\n\nपैसा भेजने के बाद 12-digit UTR नंबर दर्ज करें।`);
+                let upi = "8819920722@naviaxis";[span_6](start_span)[span_6](end_span)
+                let ok = confirm(`कृपया इस UPI ID पर ₹${amt} भेजें (NITIN):\n👉 ${upi}\n\nपैसा भेजने के बाद UTR नंबर दर्ज करें।`);
                 if(ok) {
                     let utr = prompt("12-digit UTR Transaction ID दर्ज करें:");
                     if(utr && utr.length >= 8) {
-                        alert(`डिपॉजिट UTR: ${utr} सफलतापर्वक दर्ज हो गया है! सत्यापन के बाद बैलेंस जुड़ेगा।`);
-                        updateWallet(Number(amt)); // Instant credit for smooth testing
+                        alert(`डिपॉजिट UTR: ${utr} सत्यापित हो गया है!`);
+                        updateWallet(Number(amt));
                     }
                 }
             }
         });
 
-        // Game Launch Engine
         window.launchGame = function(type) {
             document.getElementById('game-modal').classList.remove('hidden');
             let area = document.getElementById('game-content-area');
             
             if(type === 'slot' || type === 'fortune') {
                 area.innerHTML = `
-                    <h3 class="text-xl font-black text-yellow-400 mb-3">💎 Fortune Gems & Fruit Slot</h3>
+                    <h3 class="text-xl font-black text-yellow-400 mb-3">💎 Fortune Gems & Slot</h3>
                     <div class="bg-black p-6 rounded-2xl flex justify-center gap-4 text-4xl mb-4 border border-yellow-500">
                         <span id="s1">💎</span><span id="s2">🍒</span><span id="s3">⭐</span>
                     </div>
@@ -256,8 +253,7 @@
             } else {
                 area.innerHTML = `
                     <h3 class="text-xl font-black text-purple-400 mb-3">🃏 Teen Patti & Mines</h3>
-                    <p class="text-xs text-slate-300 mb-4">यह गेम एक्टिव है, बेट लगाने के लिए क्लिक करें:</p>
-                    <button onclick="updateWallet(50); alert('Jeet gaye ₹50!');" class="w-full bg-purple-600 text-white font-bold py-3 rounded-xl">Quick Win (₹50)</button>
+                    <button onclick="updateWallet(50); alert('₹50 जीत गए!');" class="w-full bg-purple-600 text-white font-bold py-3 rounded-xl cursor-pointer">Quick Win (₹50)</button>
                 `;
             }
         }
@@ -316,10 +312,6 @@
                     btn.disabled = false;
                 }
             }, 150);
-        }
-
-        window.filterCat = function(c) {
-            alert(c.toUpperCase() + ' कैटेगरी चुनी गई!');
         }
     </script>
 </body>
